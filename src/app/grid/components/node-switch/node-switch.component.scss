@@ -1,0 +1,56 @@
+@import 'style-guide';
+
+$level-margin-increment: 20px;
+
+:host {
+  user-select: text;
+}
+
+.node {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 500;
+  overflow-y: auto;
+  &:not(.leaf) {
+    // margin-left: calc(#{$level-margin-increment} * 6);
+    &.zero {
+      margin-left: 0;
+    }
+    &.one {
+      margin-left: $level-margin-increment;
+    }
+    &.two {
+      margin-left: calc(#{$level-margin-increment} * 2);
+    }
+    &.three {
+      margin-left: calc(#{$level-margin-increment} * 3);
+    }
+    &.four {
+      margin-left: calc(#{$level-margin-increment} * 4);
+    }
+    &.five {
+      margin-left: calc(#{$level-margin-increment} * 5);
+    }
+  }
+  .group-node {
+    padding-left: 10px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    cursor: pointer;
+    &.expand-disabled {
+      i { visibility: hidden; }
+      cursor: default;
+    }
+    i {
+      &.caret {
+        transition: transform 0.5s;
+        &.open {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+<label class="line-start">
+  <span *ngIf="!conditionIndex; else displayGroupOperator">if</span>
+  <ng-template #displayGroupOperator>
+    <select [value]="groupOperator"
+      (change)="onGroupOperatorChange($event)"
+      >
+      <option *ngFor="let value of Options.keys(TaskOps.groupOperatorOptions)"
+        [value]="value"
+        >
+        {{ TaskOps.groupOperatorOptions[value].displayName }}
+      </option>
+    </select>
+  </ng-template>
+</label>
+
+<select [value]="condition.metric"
+  (change)="onMetricChange($event)"
+  >
+  <option
+    *ngFor="let value of Options.keys(TaskOps.metricOptions, { channel: channel })"
+    [value]="value"
+    >
+    {{ TaskOps.metricOptions[value].displayName }}
+  </option>
+</select>
+
+<select *ngIf="taskSetType !== TaskSetType.CruiseControl; else readonlyConditionOperator"
+  [value]="condition.operator"
+  class="condition-operator"
+  (change)="onConditionOperatorChange($event)"
+  >
+  <option
+    *ngFor="let value of Options.keys(TaskOps.operatorOptions, { taskSetType: taskSetType })"
+    [value]="value"
+    >
+    {{ TaskOps.operatorOptions[value].displayName }}
+  </option>
+</select>
+
+<ng-template #readonlyConditionOperator>
+  <span class="readonly-condition-operator">
+  {{ TaskOps.operatorOptions[condition.operator].displayName }}
+  </span>
+</ng-template>
+
+<app-label-metric [metricType]="TaskOps.metricOptions[condition.metric].metricType">
+  <input class="metric"
+    [class.percentage]="TaskOps.metricOptions[condition.metric].metricType === MetricTypeEnum.Percentage"
+    [value]="condition.metricValue"
+    type="number"
+    step="0.01"
+    (change)="onMetricValueChange($event)"
+    />
+</app-label-metric>
+<app-button-circular *ngIf="allowDeleteCondition"
+  class="circular-button delete"
+  [class.glowing]="glowing"
+  (click)="onDeleteConditionClick()"
+  tooltip="Delete this condition"
+  color="red"
+  icon="times"
+  >
+</app-button-circular>
+<app-button-circular *ngIf="allowAddCondition"
+  class="circular-button add"
+  [class.glowing]="glowing"
+  (click)="onAddConditionClick()"
+  tooltip="Add another condition"
+  color="green"
+  icon="plus"
+  >
+</app-button-circular>

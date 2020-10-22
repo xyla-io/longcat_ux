@@ -1,0 +1,64 @@
+<ng-container *ngIf="parsers && parserName">
+  <div class="left-side">
+    <span [class]="['entity-label', entityLevel].join(' ')">{{ entityLevel | entityDisplayName:channel }} Naming Convention</span>
+
+    <app-badge-category-counts
+      [node]="node"
+      [bubbles]="bubbles"
+    ></app-badge-category-counts>
+
+    <div class="clickable-configuration-area"
+      *ngIf="!isDeleting"
+      [class.configurable]="!!parsers"
+      (click)="onClickOpenConfiguration($event, parsers)"
+      >
+
+      <app-badge-parser-key
+        *ngIf="data | sequenceParserKey as parserKey"
+        [parserKey]="parserKey"
+        [viewMode]="ViewMode.Simple"
+      ></app-badge-parser-key>
+
+      <span class="entity-name" 
+        *ngIf="data | sequenceParserSample:parsers as sample">
+        <span *ngIf="sample.categoryNames.length > 1; else configurationIncomplete">
+          <span *ngFor="let category of sample.categoryNames; index as i" [class.key]="i === sample.parserKeyIndex">
+            <span class="category-name">{{category}}</span>
+            <span class="delimiter" *ngIf="i !== sample.categoryNames.length - 1">{{sample.delimiter === ' ' ? '&nbsp;' : sample.delimiter }}</span>
+          </span>
+        </span>
+        <ng-template #configurationIncomplete>
+          <div class="configuration-incomplete-badge raised-container">
+            <i class="ui certificate icon"></i>
+            Configuration Incomplete
+          </div>
+        </ng-template>
+      </span>
+    </div>
+  </div>
+
+  <div class="action-button delete"
+    *ngIf="context.events.canDelete$ | async"
+    suiPopup
+    popupText="Delete this Naming Convention"
+    popupPlacement="right"
+    popupBasic
+    popupInverted
+    popupTransition="fade"
+    (click)="onClickDelete($event, parsers)"
+    [nbSpinner]="isDeleting"
+    >
+    <i class="icon trash"></i>
+  </div>
+</ng-container>
+
+<div class="no-parser-group" *ngIf="!parserName">
+  <div class="entity-label">
+    {{ entityLevel | entityDisplayName:channel:'plural' }} Without Naming Convention
+  </div>
+  {{ node.key }}
+  <app-badge-category-counts
+    [node]="node"
+    [bubbles]="bubbles"
+  ></app-badge-category-counts>
+</div>

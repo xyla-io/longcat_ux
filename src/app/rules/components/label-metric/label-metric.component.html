@@ -1,0 +1,15 @@
+<ng-container [ngTemplateOutlet]="content" *ngIf="!prefix"></ng-container>
+<ng-container [ngTemplateOutlet]="label"></ng-container>
+<ng-container [ngTemplateOutlet]="content" *ngIf="prefix"></ng-container>
+
+<ng-template #label>
+  <label [ngSwitch]="metricType">
+    <span *ngSwitchCase="MetricTypeEnum.Currency">$</span>
+    <span *ngSwitchCase="MetricTypeEnum.Percentage">%</span>
+    <span *ngSwitchCase="MetricTypeEnum.Count"></span>
+  </label>
+</ng-template>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

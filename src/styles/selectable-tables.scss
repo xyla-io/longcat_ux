@@ -1,0 +1,35 @@
+@import 'channel-icons';
+
+tr {
+  cursor: pointer;
+}
+
+
+th {
+  cursor: pointer !important;
+}
+
+.row-selected {
+  background: rgba(0,0,0,0.05);
+}
+
+.row-selected:hover {
+  background: rgba(0,0,0,0.075);
+}
+
+.row-unselected:hover {
+  background: rgba(0,0,0,0.025);
+}
+
+.tagged {
+  background: rgba(0,0,0,0.08) !important;
+  width: fit-content !important;
+}
+
+thead {
+  tr {
+    th {
+      z-index: 1;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+<ng-container *ngIf="!uploadOptions || !uploadOptions.length; else multiOptionTemplate">
+  <div
+    class="ui icon top right tiny basic button primary-action"
+    (click)="clickButtonForOptionIndex($event, 0)"
+    suiPopup
+    popupText="{{tooltip}}"
+    popupInverted
+    popupPlacement="top"
+    >
+    <i class="{{iconTag}} icon"></i>
+  </div>
+  <form>
+    <input #optionFileInputs
+       class="file-input"
+       type="file"
+       (change)="inputFileChangedForOption($event, 0, null)"
+       hidden
+       />
+  </form>
+</ng-container>
+<ng-template #multiOptionTemplate>
+  <div
+    suiDropdown
+    class="ui icon top right tiny pointing dropdown basic button primary-action"
+    [ngClass]="{'loading disabled': isWaiting }"
+    suiPopup
+    popupText="{{tooltip}}"
+    popupInverted
+    popupPlacement="top"
+    >
+    <i class="{{iconTag}} icon"></i>
+    <div suiDropdownMenu class="menu">
+      <div class="header">{{header}}</div>
+      <form 
+        *ngFor="let option of uploadOptions; index as i"
+        >
+        <div
+          class="ui basic icon labeled button item action-button dropdown-button-margin"
+          suiPopup
+          popupText="{{option.tooltip}}"
+          popupInverted
+          (click)="clickButtonForOptionIndex($event, i)"
+          >
+          {{option.buttonText}}
+          <i class="{{option.iconTag}} icon"></i>
+        </div>
+        <input #optionFileInputs
+          class="file-input"
+          type="file"
+          (change)="inputFileChangedForOption($event, i, option)"
+          hidden
+          />
+      </form>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,48 @@
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+  <span *ngIf="navbar">
+    <ul class="navbar-nav">
+      <span *ngFor="let target of navbar.root.targets; index as i">
+        <li *ngIf="target.type==='report'"
+          class="nav-item"
+          (mouseenter)="hoverEnterLeaf(i)"
+          (mouseleave)="hoverExitLeaf(i)">
+          <a [routerLink]="reportLinkBuilder(target.identifier, sessionService.currentCompanyIdentifier)" routerLinkActive="active " class="nav-link">
+            {{ target.displayName }}
+          </a>
+        </li>
+        <li *ngIf="target.type==='node'" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+            (click)="clickNode(i)"
+            (mouseenter)="hoverEnterNode(i)"
+            (mouseleave)="hoverExitNode(i)"
+            > {{target.displayName}} </a>
+          <app-nav-submenu
+            [isMenuOpen]="i===openChildNodeIndex"
+            [linkBuilder]="reportLinkBuilder"
+            [parent]="navbar.children[target.identifier]"
+            [children]="navbar.children">
+          </app-nav-submenu>
+        </li>
+      </span>
+    </ul>
+  </span>
+</div>
+<ol class="breadcrumb navbar navbar-nav" *ngIf="showNavbarBreadcrumbs">
+  <li *ngFor="let crumb of breadcrumbs; index as i"
+    (click)="clickBreadcrumb(i, crumb)"
+    (mouseenter)="hoverEnterCrumb(i, crumb)"
+    (mouseleave)="hoverExitCrumb(i, crumb)"
+    class="breadcrumb-item"
+    [class.active]="i===breadcrumbs.length-1"> {{crumb}}
+    <app-nav-breadcrumbs-submenu
+      [isMenuOpen]="this.openCrumbMenuIndex === i"
+      [parent]="this.openCrumbMenuRoot"
+      [children]="navbar.children"
+      [linkBuilder]="reportLinkBuilder"
+      >
+    </app-nav-breadcrumbs-submenu>
+  </li>
+</ol>

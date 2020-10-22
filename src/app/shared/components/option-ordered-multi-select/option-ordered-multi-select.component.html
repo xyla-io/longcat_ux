@@ -1,0 +1,34 @@
+<div class="wrapper">
+  <div class="liner" (click)="onClickLiner($event)">
+    <i [class]="icon + ' icon'"></i>
+    <div class="selected-options"
+      cdkDropList cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="onDropReorder($event)"
+      >
+      <div class="option-wrapper" *ngFor="let option of selectedOptions; index as i"
+        cdkDrag
+        cdkDragLockAxis="x"
+        >
+        <div class="option">
+          {{ option.displayName }}
+          <i class="ui small times icon" (click)="onClickRemove($event, option)"></i>
+        </div>
+        <div *ngIf="i !== selectedOptions.length - 1"><i class="ui fitted large caret right violet icon"></i></div>
+      </div>
+      <div *ngIf="selectedOptions.length === 0" class="option placeholder">
+        {{ placeholder }}
+      </div>
+    </div>
+    <i class="ui caret down icon"></i>
+  </div>
+  <div [class.open]="isOpen" class="unselected-options">
+    <div class="option" *ngFor="let option of unselectedOptions"
+      (click)="onClickAdd($event, option)"
+      >
+      {{ option.displayName }}
+    </div>
+    <div *ngIf="unselectedOptions.length === 0" class="option placeholder">
+      All options are selected
+    </div>
+  </div>
+</div>

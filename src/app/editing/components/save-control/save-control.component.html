@@ -1,0 +1,31 @@
+<div class="left-group">
+  <input
+    *ngIf="currentTextOptions.titlePlaceholder"
+    [placeholder]="currentTextOptions.titlePlaceholder"
+    [value]="title"
+    (keyup)="onTitleChange($event)"
+    >
+  <button
+    *ngIf="currentTextOptions.saveText && saveStatus !== SaveStatus.Clean"
+    class="save secondary"
+    (click)="onClickSave($event)"
+    [hidden]="saveStatus === SaveStatus.Clean"
+    >
+    {{currentTextOptions.saveText}}
+  </button>
+  <button 
+    *ngIf="currentTextOptions.cancelText && saveStatus !== SaveStatus.Clean"
+    class="cancel secondary"
+    (click)="onClickCancel($event)"
+    >
+    {{currentTextOptions.cancelText}}
+  </button>
+</div>
+<button
+  *ngIf="currentTextOptions.deleteText"
+  class="danger primary"
+  (click)="onClickDelete($event)"
+  >
+  <i *ngIf="currentTextOptions.deleteIcon as deleteIcon" [class]="['ui', deleteIcon, 'icon'].join(' ')"></i>
+  {{currentTextOptions.deleteText}}
+</button>

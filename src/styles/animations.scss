@@ -1,0 +1,12 @@
+
+@keyframes pop {
+  50% {
+    transform: scale(1.4);
+  }
+}
+
+@keyframes push {
+  50% {
+    transform: scale(0.6);
+  }
+}

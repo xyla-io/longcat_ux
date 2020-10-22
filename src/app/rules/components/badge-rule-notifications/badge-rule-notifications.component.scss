@@ -1,0 +1,13 @@
+@import 'style-guide';
+
+:host {
+  .title {
+    text-align: right;
+    color: $color-title-primary;
+    padding-bottom: 4px;
+    padding-right: 6px;
+  }
+  span.badge {
+    font-size: 0.9rem;
+  }
+}

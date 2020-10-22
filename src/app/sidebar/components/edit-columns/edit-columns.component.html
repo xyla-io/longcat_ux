@@ -1,0 +1,58 @@
+<ng-container *ngIf="!selectedDisplayColumns.length; else listColumnsTemplate">
+  <ng-container *ngTemplateOutlet="columnTemplate">
+  </ng-container>
+</ng-container>
+
+<ng-template #listColumnsTemplate>
+  <ng-container *ngFor="let displayColumn of selectedDisplayColumns; index as i">
+    <ng-container *ngTemplateOutlet="columnTemplate; context: {
+        identifier: displayColumn.identifier,
+        displayColumn: displayColumn,
+        title: displayColumnTitles[i],
+        index: i
+      }"
+      >
+    </ng-container>
+  </ng-container> </ng-template>
+
+<ng-template #columnTemplate
+  let-identifier="identifier"
+  let-displayColumn="displayColumn"
+  let-title="title"
+  let-index="index"
+  >
+  <app-expandable-list-item
+    (clickRemove)="onClickRemoveColumn($event)"
+    (clickExpand)="onClickExpandColumn($event)"
+    [expanded]="index === expandedIndex"
+    [item]="{
+      expandable: displayColumn ? columnToColumnCategoryMap.get(displayColumn.identifier).columnIdentifiers.length > 1 : true,
+      itemType: 'KPI',
+      index: index,
+      badge: index === 0 ? firstColumnBadge : null,
+      displayTitle: ((displayColumn || {}).parameters || {}).userDisplayName
+      || ((displayColumn || {}).parameters || {}).inscriptionDisplayName 
+      || (templateColumnMap.get(identifier) || {}).displayName
+    }"
+    >
+    <div expandable-content
+      *ngIf="displayColumn && expandedDisplayColumn"
+      >
+      <app-edit-breakdown-table-columns-expanded
+        [displayColumn]="expandedDisplayColumn"
+        [columnCategory]="columnToColumnCategoryMap.get(expandedDisplayColumn.identifier)"
+        [templateColumnMap]="templateColumnMap"
+        (displayColumnChange)="onDisplayColumnChange($event)"
+        >
+      </app-edit-breakdown-table-columns-expanded>
+    </div>
+  </app-expandable-list-item>
+</ng-template>
+
+<div class="bank">
+  <app-button-bank
+    [buttons]="bankedButtons"
+    (buttonClick)="onBankedButtonClick($event)"
+    >
+  </app-button-bank>
+</div>

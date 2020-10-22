@@ -1,0 +1,33 @@
+<div *ngIf="masterTemplate"
+  class="block__heading">
+  <div class="block__title">
+    <span *ngIf="template.structure.displayName">{{ template.structure.displayName }}</span>
+    <span *ngIf="!template.structure.displayName">{{ masterTemplate.structure.defaultDisplayName }}</span>
+    <span class="block__title--small" *ngFor="let identifier of template.structure.displayBreakdownIdentifiers; index as i">
+      <ng-container *ngIf="i===0; else compoundBreakdown"> by </ng-container>
+      <ng-template #compoundBreakdown>
+        <ng-container *ngIf="i!==template.structure.displayBreakdownIdentifiers.length-1; else lastCompoundBreakdown">, </ng-container>
+        <ng-template #lastCompoundBreakdown>
+          <span *ngIf="template.structure.displayBreakdownIdentifiers.length > 2">,</span>
+          and
+        </ng-template>
+      </ng-template>
+      <span>{{ breakdownDisplayNameForIdentifier(identifier) }}</span>
+    </span>
+    <button nbButton
+      class="title__menu"
+      size="large"
+      [nbContextMenu]="menu.nbMenuItems"
+      [nbContextMenuTag]="menu.menuTag"
+      >
+      <nb-icon icon="more-horizontal"></nb-icon>
+    </button>
+  </div>
+  <div class="block__daterange">
+    <app-daterange-selector
+      [daterange]="(template.queryParameters || {}).interval"
+      (daterangeChange)="onDaterangeChange($event)"
+      >
+    </app-daterange-selector>
+  </div>
+</div>

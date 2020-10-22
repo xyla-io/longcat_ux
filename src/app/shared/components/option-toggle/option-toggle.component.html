@@ -1,0 +1,5 @@
+<div [class]="['boolean-toggle', color, option ? 'on' : ''].join(' ')"
+  (click)="onToggleChange($event, !option)"
+  >
+  <div [class]="['knob', knobColor].join(' ')"></div>
+</div>

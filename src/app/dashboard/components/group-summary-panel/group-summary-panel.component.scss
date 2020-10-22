@@ -1,0 +1,43 @@
+@import 'style-guide';
+@import 'dashboard';
+
+$big-number-VERTICAL-SPACING: 30px;
+
+.container {
+  width: 270px;
+}
+
+.block {
+  .block__heading {
+    position: fixed;
+    margin-left: $screen-margin-left;
+    margin-bottom: 20px;
+    margin-top: 2px;
+
+    .block__title {
+      height: 20px;
+    }
+  }
+
+  .block__fixed {
+    $space-above: 80px;
+    $space-below: 126px;
+    position: fixed;
+    top: calc(#{$header-height} + 76px);
+    max-height: calc(100% - #{$header-height} - #{$footer-height} - #{$space-above} - #{$space-below});
+    overflow-y: auto;
+    // flip the scroll bar to the left side
+    direction: rtl;
+    padding-top: 10px;
+    padding-bottom: 20px;
+
+    .block__elements {
+      // flip the inner content back to normal
+      direction: ltr;
+    }
+  }
+}
+
+app-block-big-number+.spacer {
+  height: $big-number-VERTICAL-SPACING;
+}

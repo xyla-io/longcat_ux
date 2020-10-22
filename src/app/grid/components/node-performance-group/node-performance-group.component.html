@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <img class="logo"
+    *ngIf="icon"
+    [src]="icon"
+    [ngStyle]="{
+      'background': iconBackground
+    }"
+    />
+  <span *ngIf="!isChannelRelatedCategory" class="category">{{ [category] | displayNames:{}:{makeDisplayName: CategoryOps.makeDisplayName } }}</span>
+  <span class="name">{{ name }}</span>
+  <span class="category" *ngIf="childCategory as category">by {{ category }}</span>
+</div>

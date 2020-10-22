@@ -1,0 +1,25 @@
+.overlay.nsm-overlay-open {
+  background-color: rgba(0, 0, 0, 0.05);
+  /* Ensure NbPopover (z-index 1000) can be visible on top of modal: */
+  z-index: 999 !important;
+}
+.nsm-dialog>.nsm-content {
+  margin-top: 20px;
+  border-radius: 10px;
+}
+button.nsm-dialog-btn-close {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nsm-content {
+  h1 {
+    margin-bottom: 4px;
+  }
+}
+
+.fullwindow {
+  .nsm-dialog>.nsm-content {
+    margin-top: 200px;
+  }
+}

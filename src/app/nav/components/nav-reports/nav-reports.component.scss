@@ -1,0 +1,72 @@
+@import 'nav';
+
+li {
+  margin-left: 5px;
+  margin-right: 20px;
+}
+
+.navbar-nav {
+  margin-left: 12px;
+  margin-bottom: 4px;
+}
+
+// .nav-link {
+//   padding-left: 0 !important;
+//   padding-right: 0 !important;
+//   padding-bottom: 2px !important;
+//   border-bottom: 2px solid #f8f9fa;
+// }
+
+.breadcrumb {
+  position: absolute;
+  top: 42px;
+  padding: 2px;
+  background: inherit;
+  margin-right: 20px;
+  margin-left: 13px;
+  margin-bottom: 0;
+  font-size: 12px;
+  color: #cfcfcf;
+  cursor: default;
+}
+
+.breadcrumb > li + li:before {
+  color: var(--xylamediumgrey);
+  /* This is how you would change the breadcrumb symbol: */
+  /* content: ">"; */
+  padding: 0 4px;
+}
+
+.breadcrumb-item {
+  margin:2px;
+  padding:0;
+  cursor: pointer;
+}
+
+.breadcrumb-item:hover {
+  color: var(--xylaprimary);
+}
+
+.breadcrumb .active {
+  color: #9f9f9f;
+}
+
+.breadcrumb .active:hover{
+  color: var(--xylaprimary);
+}
+
+app-nav-breadcrumbs-submenu {
+  position: relative;
+  top: 0px;
+}
+
+app-row-filter {
+  position: relative;
+  bottom: 3px;
+}
+
+@media(max-width: 992px) {
+  .breadcrumb.navbar.navbar-nav {
+    display:none;
+  }
+}

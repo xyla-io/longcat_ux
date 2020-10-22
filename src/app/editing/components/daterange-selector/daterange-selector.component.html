@@ -1,0 +1,19 @@
+<div
+  class="daterange-button"
+  [nbPopover]="editDaterange"
+  nbPopoverPlacement="bottom"
+  >
+  {{ daterange | daterange }}
+  <nb-icon icon="chevron-down">
+  </nb-icon>
+</div>
+<ng-template #editDaterange>
+  <div class="daterange-popover">
+    <app-daterange-builder
+      [daterange]="daterange"
+      (daterangeChange)="onDaterangeChange($event)"
+      (validationChange)="onValidationChange($event)"
+      >
+    </app-daterange-builder>
+  </div>
+</ng-template>

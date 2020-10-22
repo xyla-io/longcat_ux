@@ -1,0 +1,92 @@
+// ViewEncapsulation is None
+app-daterange-builder {
+  @import 'style-guide';
+
+  nb-calendar-range {
+    nb-card {
+      margin: 0 auto !important;
+      margin-top: 16px !important;
+    }
+    nb-calendar-navigation {
+      button {
+        background: none !important;
+        border: none !important;
+        color: black !important;
+        font-size: 20px !important;
+        border-radius: 50px !important;
+      }
+      button:hover{
+        color: white !important;
+        background: $color-info-500 !important;
+      }
+    }
+    button {
+      &.next-month,&.prev-month {
+        color: $color-info-500 !important;
+      }
+    }
+    nb-calendar-day-picker .range-cell.start {
+      border-top-left-radius: 50px !important;
+      border-bottom-left-radius: 50px !important;
+    }
+    nb-calendar-day-picker .range-cell.end {
+      border-top-right-radius: 50px !important;
+      border-bottom-right-radius: 50px !important;
+    }
+    nb-calendar-day-picker .day-cell:not(.empty):not(.disabled) {
+      border-radius: 50px !important;
+    }
+  }
+
+  $input-height: 28px;
+  $input-font-size: 12px;
+
+  select {
+    font-size: $input-font-size;
+    height: $input-height;
+    box-shadow: 0 0 2px 0px rgba(0,0,0,0.2);
+  }
+
+  .range-selection {
+    border-radius: 2px;
+    padding: 3px;
+    box-shadow: 0 0 2px 0px rgba(0, 0, 0, 0.2);
+    height: $input-height;
+    display: inline-block;
+    position: relative;
+    top: -0.5px;
+    margin-left: 4px;
+
+    &:hover {
+      cursor: pointer;
+      background: $hover-white-element;
+    }
+
+    .range-selection__label {
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #CFD1D6;
+      font-size: 8px;
+      margin-right: 4px;
+    }
+    .range-selection__value {
+      display: inline-block;
+      font-size: $input-font-size;
+      width: 78px;
+      position: relative;
+      top: 1px;
+      &.range-selection__value--undefined {
+        font-weight: bold;
+        color: #CFD1D6;
+        text-align: center;
+      }
+    }
+    .range-selection__icon {
+      position: relative;
+      top: 2px;
+      nb-icon {
+        color: $color-info-500;
+      }
+    }
+  }
+}

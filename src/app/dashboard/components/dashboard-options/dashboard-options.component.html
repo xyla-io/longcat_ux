@@ -1,0 +1,9 @@
+<div class="full-width">
+  <div class="filter" *ngIf="productNameFilter">
+    <app-row-filter [variableRowFilter]="productNameFilter"
+      [rowFilter]="productNameFilter.activeSelection"
+      (rowFilterChange)="onRowFilterChange($event)"
+      >
+    </app-row-filter>
+  </div>
+</div>

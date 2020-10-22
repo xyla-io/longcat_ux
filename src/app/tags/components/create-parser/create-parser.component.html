@@ -1,0 +1,62 @@
+<h4 class="header">Create New Naming Convention</h4>
+<app-heading-channel [channel]="channel"></app-heading-channel>
+
+<div class="content-container" *ngIf="!saving; else savingTemplate">
+  <div class="select-entity">
+    <div>
+      <label>Select entity level:</label>
+      <select [value]="entityLevel"
+      (change)="onEntityLevelChange($event)"
+      class="entity-select show-arrow"
+      >
+        <option *ngFor="let entity of entityLevelOptions" [value]="entity">{{entity | entityDisplayName:channel }}</option>
+      </select>
+    </div>
+    <div class="parser-key-settings">
+      <app-badge-parser-key
+        [nbPopover]="parserKeyPopover"
+        nbPopoverTrigger="hover"
+        nbPopoverPlacement="right"
+        [parserKey]="parserKey"
+        >
+      </app-badge-parser-key>
+      <select class="show-arrow"
+        [value]="patternPosition" (change)="onPatternPositionChange($event)">
+        <option [value]="PatternPosition.Prefix">Prefix</option>
+        <option [value]="PatternPosition.Suffix">Suffix</option>
+      </select>
+    </div>
+    <ng-template #parserKeyPopover>
+      <div class="info-popover">
+        <div>
+        This indicates to Xyla how to tag your {{ entityLevel | entityDisplayName:channel:'plural'}}.<br>
+        It must be included in the name of each {{ entityLevel | entityDisplayName:channel }} that<br>
+        uses this naming convention.
+        </div>
+        <button nbButton ghost size="small" status="basic"
+          (click)="onToggleParserKeyType($event)"
+          >
+          <nb-icon *ngIf="customParserKey !== undefined" icon="backspace-outline" status="primary"></nb-icon>
+          {{ customParserKey === undefined ? 'Use Custom ID' : 'Use Generated ID' }}
+        </button>
+        <input class="custom-parser-key show-border" *ngIf="customParserKey !== undefined" type="text"
+          placeholder="Custom Convention ID"
+          [value]="customParserKey"
+          (keyup)="onCustomParserKeyChange($event)"
+          >
+        <div *ngIf="customParserKeyCollision" class="custom-parser-key-error">
+          This ID is already in use for {{ entityLevel | entityDisplayName:channel:'plural' }} on {{ChannelOps.channelOptions[channel].displayName}}
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <button nbButton status="info" (click)="onClickContinue($event)" [disabled]="saving" [nbSpinner]="saving">
+    Continue
+  </button>
+</div>
+
+<ng-template #savingTemplate>
+  <div class="modal-saving-container" [nbSpinner]="true">
+    Creating Parser
+  </div>
+</ng-template>

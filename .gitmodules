@@ -1,0 +1,3 @@
+[submodule "development_packages/xylo"]
+	path = development_packages/xylo
+	url = git@github.com:xyla-io/xylo.git

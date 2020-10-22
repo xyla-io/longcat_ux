@@ -1,0 +1,13 @@
+<div>
+  <button
+    type="submit"
+    class="btn btn-primary-xyla btn-lg btn-block"
+    [disabled]="!isEnabled"
+    (click)="onClickButton($event)">
+    {{ label }}
+    <i
+      [class.fa]="isWaiting"
+      [class.fa-spinner]="isWaiting"
+      [class.fa-spin]="isWaiting"></i>
+  </button>
+</div>

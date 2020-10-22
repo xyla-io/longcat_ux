@@ -1,0 +1,116 @@
+<div class="confirmation-modal" *ngIf="channelSelection">
+  <h1>Clone Rule</h1>
+
+  <div class="entity-select horizontal">
+    <label>Channel</label>
+    <app-option-single-select
+      [options]="ChannelOps.channelOptions"
+      [selection]="channelSelection"
+      [search]="true"
+      (selectionChange)="onChannelSelectionChange($event)"
+      >
+    </app-option-single-select>
+
+    <label>Clone Type</label>
+    <app-option-single-select
+      [options]="cloneTypeOptions"
+      [selection]="cloneTypeSelection"
+      [search]="false"
+      (selectionChange)="onCloneTypeSelectionChange($event)"
+      >
+    </app-option-single-select>
+  </div>
+
+  <div class="entity-select">
+    <label>Account</label>
+    <div *ngIf="!accountPathSelection" class="none">—</div>
+    <app-option-single-select *ngIf="accountPathSelection" 
+      [options]="accountOptions"
+      [selection]="accountPathSelection"
+      [search]="true"
+      (selectionChange)="onAccountSelectionChange($event)"
+      >
+    </app-option-single-select>
+  </div>
+
+  <div class="entity-select" *ngIf="cloneTypeSelection === CloneTypeEnum.Single">
+    <label>Campaign</label>
+    <div *ngIf="!campaignIDSelection" class="none">—</div>
+    <app-option-single-select *ngIf="campaignIDSelection" 
+      [options]="campaignOptions"
+      [selection]="campaignIDSelection"
+      [search]="true"
+      (selectionChange)="onCampaignSelectionChange($event)"
+      >
+      </app-option-single-select>
+  </div>
+
+  <div class="entity-select" *ngIf="cloneTypeSelection === CloneTypeEnum.Single">
+    <label>Adgroup</label>
+    <div *ngIf="!campaignIDSelection" class="none">—</div>
+    <app-option-single-select *ngIf="campaignIDSelection" 
+      [options]="adgroupOptions"
+      [selection]="adgroupIDSelection || '-1'"
+      [search]="true"
+      (selectionChange)="onAdgroupSelectionChange($event)"
+      >
+    </app-option-single-select>
+  </div>
+
+  <hr *ngIf="cloneTypeSelection === CloneTypeEnum.CampaignPattern">
+  <div class="entity-select first-pattern-match" *ngIf="cloneTypeSelection === CloneTypeEnum.CampaignPattern">
+    <label>Campaign name</label>
+    <app-option-single-select
+      [options]="patternPositionOptions"
+      [selection]="patternPositionSelection"
+      [search]="false"
+      (selectionChange)="onPatternPositionChange($event)"
+      >
+    </app-option-single-select>
+    <input placeholder="anything" type="text" [value]="firstPatternInput" (keyup)="onFirstPatternInputChange($event)" />
+  </div>
+
+  <div class="entity-select second-pattern-match" *ngIf="cloneTypeSelection === CloneTypeEnum.CampaignPattern">
+    <label>and Campaign name contains</label>
+    <input placeholder="anything" type="text" [value]="secondPatternInput" (keyup)="onSecondPatternInputChange($event)" />
+  </div>
+
+  <div class="match-summary" *ngIf="cloneTypeSelection === CloneTypeEnum.CampaignPattern">
+    <div class="match-label"
+      suiPopup
+      [popupText]="showMatches ? 'Click to Hide Matches' : 'Click to Show Matches'"
+      popupBasic
+      popupPlacement="top"
+      popupInverted
+      popupTransition="fade"
+      (click)="onClickMatchLabel()"
+      >
+      Matches {{ getMatchLabel() }}
+    </div>
+    <ul *ngIf="showMatches" class="match-samples">
+      <li *ngFor="let name of getMatchNames()">
+        {{ name }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="check-option">
+    <label>
+      <input type="checkbox" [checked]="shouldEnable" (change)="onEnabledChange($event)" />
+        Set New Rule{{getCloneCount() === 1 ? '' : 's'}} to Enabled
+    </label>
+  </div>
+  <div class="buttons">
+    <button class="ui button"
+      (click)="cancel.emit()"
+      >
+      Cancel
+    </button>
+    <button class="ui info button"
+      [class.disabled]="!this.canSubmit()"
+      (click)="onClickConfirm($event)"
+      >
+      {{ cloneTypeSelection === CloneTypeEnum.Single ? 'Create Clone' : 'Clone to ' + getMatchLabel() }}
+    </button>
+  </div>
+</div>

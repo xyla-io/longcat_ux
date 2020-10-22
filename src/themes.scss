@@ -1,0 +1,96 @@
+@import 'styles/style-guide';
+
+// import Nebular Theme System and the default theme
+@import '~@nebular/theme/styles/theming';
+@import '~@nebular/theme/styles/themes/default';
+
+
+$nb-themes: nb-register-theme((
+  font-family-primary: 'ProximaNova',
+
+  // layout component
+  layout-min-height: 0,
+  layout-background-color: $main-background-color,
+
+  // sidebar
+  sidebar-padding: 0,
+  sidebar-width: 414px,
+
+  // tree grid
+  tree-grid-header-background-color: rgba(0,0,0,0),
+
+  // accordion
+  accordion-shadow: none,
+
+  // tooltip
+  tooltip-max-width: 48rem,
+  tooltip-text-font-size: 1rem,
+
+  // select
+  select-min-width: 4rem,
+
+  // radio
+  radio-height: 13px,
+  radio-width: 13px,
+
+  // button
+  button-filled-text-transform: none,
+  button-outline-text-transform: none,
+  button-ghost-text-transform: none,
+  button-hero-text-transform: none,
+  // button-text-font-weight: 400,
+
+  // calender
+  calendar-cell-in-range-background-color: #EEE5F6,
+  calendar-cell-selected-background-color: $color-info-500,
+  calendar-cell-hover-background-color: $color-info-500,
+
+  // colors
+  color-primary-100: $color-primary-100,
+  color-primary-200: $color-primary-200,
+  color-primary-300: $color-primary-300,
+  color-primary-400: $color-primary-400,
+  color-primary-500: $color-primary-500,
+  color-primary-600: $color-primary-600,
+  color-primary-700: $color-primary-700,
+  color-primary-800: $color-primary-800,
+  color-primary-900: $color-primary-900,
+
+  color-success-100: $color-success-100,
+  color-success-200: $color-success-200,
+  color-success-300: $color-success-300,
+  color-success-400: $color-success-400,
+  color-success-500: $color-success-500,
+  color-success-600: $color-success-600,
+  color-success-700: $color-success-700,
+  color-success-800: $color-success-800,
+  color-success-900: $color-success-900,
+
+  color-info-100: $color-info-100,
+  color-info-200: $color-info-200,
+  color-info-300: $color-info-300,
+  color-info-400: $color-info-400,
+  color-info-500: $color-info-500,
+  color-info-600: $color-info-600,
+  color-info-700: $color-info-700,
+  color-info-800: $color-info-800,
+  color-info-900: $color-info-900,
+
+), default, default);
+
+// Overrides nb-layout container heights to allow sidebar
+// to be nested inside other components properly
+nb-layout {
+  .scrollable-container {
+    height: 100% !important;
+  }
+  .layout {
+    height: 100% !important;
+  }
+}
+
+nb-spinner {
+  // Default from Nebular is 9999 which covers dropdown menus
+  // and notifications from our app
+  z-index: 100 !important;
+}

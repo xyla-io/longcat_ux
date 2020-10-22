@@ -1,0 +1,22 @@
+<div id="container">
+  <div *ngIf="activity$ | async as activity">
+    <div class="ui segments">
+      <div *ngFor="let table of activity"
+        class="ui segment">
+        <h3>{{ table.identifier }}</h3>
+        <table class="ui purple very compact small table">
+          <thead>
+            <tr>
+              <th *ngFor="let column of table.schema.fields">{{ column.name }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of table.data">
+              <td *ngFor="let column of table.schema.fields">{{ row[column.name] }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+$block-title-FONT-SIZE: 18px;
+$block-title-FONT-FAMILY: 'ProximaNova';
+$block-title-FONT-WEIGHT: 600;
+
+$dashboard-options-HEIGHT: 40px;
+
+.block__heading {
+  .block__title {
+    text-transform: uppercase;
+    font-size: $block-title-FONT-SIZE;
+    font-family: $block-title-FONT-FAMILY;
+    font-weight: $block-title-FONT-WEIGHT;
+  }
+
+  .block__daterange {
+    width: fit-content;
+  }
+
+  .block__title--small {
+    font-size: calc(#{$block-title-FONT-SIZE} * 0.7);
+  }
+}
+
+.loading-container {
+  margin-top: 20px;
+  height: 200px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  &.error {
+    text-align: center;
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0.05);
+    padding-top: 40px;
+    font-size: 20px;
+
+    nb-icon {
+      font-size: 3rem;
+    }
+  }
+}
+

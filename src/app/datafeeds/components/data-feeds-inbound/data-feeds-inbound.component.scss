@@ -1,0 +1,71 @@
+@import 'channel-icons';
+@import 'buttons';
+@import 'menus';
+
+td.button-cell-padding {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.ui.floating.dropdown.button .menu {
+  width: 400px;
+}
+
+td {
+  overflow: visible;
+}
+
+.padded-item {
+  padding: 12px;
+}
+
+.cell-multi-item {
+  float: right;
+  margin-right: 6px;
+  margin-left: 6px;
+}
+
+.logo-icon {
+  color: rgba(0,0,0,0.12);
+  padding-left: 19px;
+}
+
+.status-icon {
+  margin-right: 10px;
+}
+
+.ui.icon.basic.button {
+  width: fit-content;
+  padding-top: 0.5em;
+}
+
+.header {
+  margin-top: 6px !important;
+  margin-left: 6px !important;
+}
+
+.header .plug.icon {
+  font-size: 1.1em;
+}
+
+.header .truck.icon {
+  font-size: 0.8em;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.ui.segment {
+  min-height: 0;
+}
+
+.table thead th {
+  background: white !important;
+}
+
+.ui.table {
+  border-collapse: collapse !important;
+}
+
+.ui.table tr td {
+  border-top: 1px solid rgba(34,36,38,0.05);
+}

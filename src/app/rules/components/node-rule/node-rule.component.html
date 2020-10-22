@@ -1,0 +1,94 @@
+<div class="wrapper" *ngIf="editedData"
+  [class.adgroup]="!!editedData.adgroupID"
+  >
+  <div class="expand-collapse-wrapper"
+    (click)="onClickExpandCollapse()"
+    >
+    <i class="icon expand-collapse"
+      [class.expand]="isCollapsed"
+      [class.compress]="isExpanded"
+      >
+    </i>
+  </div>
+  <ng-container *ngIf="isExpanded; else collapsedView">
+    <app-edit-rule [rule]="editedData" [node]="node" [gridAPI]="gridAPI">
+    </app-edit-rule>
+  </ng-container>
+  <ng-template #collapsedView>
+    <div class="liner">
+      <div class="left-group">
+
+        <div class="options-box" (click)="$event.stopPropagation()">
+          <app-option-toggle
+            [option]="editedData.isEnabled"
+            [color]="!editedData.shouldPerformAction ? 'orange' : ''"
+            [knobColor]="!editedData.modified ? 'yellow' : ''"
+            (toggleChange)="onEnabledToggleChange($event)"
+            >
+          </app-option-toggle>
+          <i [class]="TaskOps.taskSetTypeOptions[TaskOps.getTaskSetType(editedData.tasks)].icon + ' icon'"
+          [class.isEnabled]="editedData.isEnabled"
+          [class.isDisabled]="!editedData.isEnabled"
+          >
+          </i>
+        </div>
+
+        <div (click)="onClickExpandCollapse()" class="click-expand-box">
+          <div class="left-group">
+
+            <div class="time-settings">
+              <span>
+                <span class="label">check </span>{{ RuleOps.runIntervalOptions[editedData.runInterval].displayName }}
+              </span>
+              <span>
+                <span class="label">look back </span>{{ RuleOps.dataCheckRangeOptions[editedData.dataCheckRange].displayName }}
+              </span>
+            </div>
+
+            <div class="tasks">
+              <div class="task" *ngFor="let task of TaskOps.getDisplayableTasks(editedData.tasks); index as taskIndex">
+
+                <div class="conditions">
+                  <div *ngFor="let condition of this.conditionGroup(task.conditionGroup).conditions; index as conditionIndex"
+                    class="condition"
+                    >
+                    <span *ngIf="conditionIndex !== 0" class="group-operator">{{ TaskOps.groupOperatorOptions[this.conditionGroup(task.conditionGroup).operator].displayName }}</span>
+                    {{ TaskOps.metricOptions[condition.metric].displayName }}
+                    <span class="operator">{{ TaskOps.operatorOptions[condition.operator].displayName }}</span>
+                    {{ TaskOps.formatMetric(TaskOps.metricOptions[condition.metric].metricType, condition.metricValue) }}
+                  </div>
+                </div>
+
+                <div *ngIf="task.actions[0] as action" class="action">
+                  <span class="then-arrow">➜</span>
+                  <span class="action-name">
+                    {{ TaskOps.actionOptions[action.action].displayName }}
+                  </span>
+                  <span *ngIf="TaskOps.actionOptions[action.action].params.adjustmentValue as adjustmentValueType"
+                    class="adjustmentValue"
+                    >
+                    {{ TaskOps.formatMetric(adjustmentValueType, action.adjustmentValue) }}
+                  </span>
+                  <span *ngIf="TaskOps.actionOptions[action.action].params.adjustmentLimit as adjustmentLimitType"
+                    class="adjustmentLimit"
+                    >
+                    ⌈{{ TaskOps.formatMetric(adjustmentLimitType, action.adjustmentLimit) }}⌉
+                  </span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div>
+            <app-badge-rule-notifications
+              [notifications]="notifications"
+              >
+            </app-badge-rule-notifications>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

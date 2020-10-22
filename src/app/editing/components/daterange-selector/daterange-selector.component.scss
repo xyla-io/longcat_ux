@@ -1,0 +1,22 @@
+@import 'style-guide';
+
+.daterange-button {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.85rem;
+  display: flex;
+  padding-left: 10px;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  nb-icon {
+    color: $color-info-500;
+    position: relative;
+    top: -1px;
+  }
+}
+
+.daterange-popover {
+  margin: 12px;
+}

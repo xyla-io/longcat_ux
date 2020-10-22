@@ -1,0 +1,10 @@
+<label>check</label>
+<select [value]="runInterval"
+  (change)="onSelectChange($event)"
+  >
+  <option *ngFor="let value of Options.keys(RuleOps.runIntervalOptions, { channel: channel })"
+    [value]="value"
+    >
+    {{ RuleOps.runIntervalOptions[value].displayName }}
+  </option>
+</select>

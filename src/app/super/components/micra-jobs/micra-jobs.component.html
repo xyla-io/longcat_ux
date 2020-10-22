@@ -1,0 +1,74 @@
+<div id="container">
+
+  <div *ngIf="micraJobs$ | async as micraJobs">
+
+    <div class="ui segments">
+      <div class="ui segment">
+        <h3>Active Jobs</h3>
+        <table *ngIf="micraJobs.active_jobs; else errorMessage"
+          class="ui purple compact table">
+          <thead>
+            <tr>
+              <th> job name </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let job of micraJobs.active_jobs">
+              <td>{{ job }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ui segment">
+        <h3>Ready Jobs</h3>
+        <table *ngIf="micraJobs.ready_jobs; else errorMessage"
+          class="ui teal compact table">
+          <thead>
+            <tr>
+              <th>
+                job name
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let job of micraJobs.ready_jobs">
+              <td>{{ job }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ui segment">
+        <h3>All Almacen Jobs</h3>
+        <table *ngIf="micraJobs.almacen_ready_jobs; else errorMessage"
+          class="ui teal compact fixed table">
+          <thead>
+            <tr>
+              <th class="two wide"> action </th>
+              <th class="two wide"> company </th>
+              <th class="two wide"> scheduled date </th>
+              <th class="one wide"> result </th>
+              <th> full name </th>
+              <th> tasks </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let job of micraJobs.almacen_ready_jobs">
+              <td>{{ job.name.split(':')[3] }}</td>
+              <td>{{ job.name.split(':')[2] }}</td>
+              <td>{{ job.ts.split('-')[0] | date:'long' }}</td>
+              <td>{{ (jobInfo[job.name]||{}).result }}</td>
+              <td class="long-job-name">{{ job.name }}</td>
+              <td>{{ getJobTasks(job.name) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #errorMessage>
+  <p style="color:red">An error occurred while retreiving items.</p>
+</ng-template>

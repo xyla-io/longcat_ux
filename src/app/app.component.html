@@ -1,0 +1,101 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+  <a class="navbar-brand" href="#">
+    <app-partner-welcome></app-partner-welcome>
+  </a>
+
+  <app-nav-reports></app-nav-reports>
+
+  <ul
+    class="navbar-nav"
+    id="dataMenuContainer"
+    >
+    <li 
+      *ngIf="isSuperUser() && sessionService.currentCompanyIdentifier"
+      class="nav-item"
+    >
+      <a 
+      class="nav-link"
+      (click)="onClickExplore($event)"
+        >
+        <i class="ui chart line icon"></i>Explore
+      </a>
+    </li>
+    <li
+      *ngFor="let link of navbarMenuLinks"
+      class="nav-item">
+      <a
+        href="#"
+        class="nav-link"
+        [routerLink]="link.path"
+        routerLinkActive="active"
+        > 
+        <i *ngIf="link.iconTag"
+          class="ui {{link.iconTag}} icon"
+          ></i>
+        {{link.displayName}}
+        <div *ngIf="link.notificationCount"
+          class="label-container">
+          <div class="notification-indicator"></div>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+  <div id="userMenuContainer"> 
+    <img [src]="logoURL" [hidden]="currentUser!==null">
+    <div class="nav-item dropdown dropleft" [hidden]="currentUser===null">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img [src]="logoURL">
+      </a>
+
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a *ngFor="let link of userMenuLinks"
+          class="dropdown-item"
+          routerLink="{{link.path}}">
+          <i class="ui grey {{link.iconTag}} icon"></i>
+          {{ link.displayName }}
+          <div *ngIf="link.notificationCount"
+            class="label-container">
+            <div class="notification-indicator"></div>
+          </div>
+        </a>
+        <a *ngIf="isSuperUser() && sessionService.currentCompanyIdentifier"
+          class="dropdown-item"
+          (click)="onClickEditRules($event)"
+          >
+          <i class="ui grey balance scale icon"></i> Manage Rules in DataDragon
+        </a>
+        <div *ngIf="userMenuLinks.length" class="dropdown-divider"></div>
+        <a class="dropdown-item sign-out"
+          [class.disabled]="!signOutIsEnabled"
+          (click)="onSignOutClicked()">
+          <i class="ui grey sign-out icon"></i>
+          Sign Out
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-item" *ngIf="canSwitchCompanies">
+    <app-switch-company></app-switch-company>
+  </div>
+</nav>
+
+<div class="router-outlet-container ">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- Fixed notification/status systems -->
+<app-alert></app-alert>
+<app-downloads></app-downloads>
+<app-adblock-modal></app-adblock-modal>
+
+<footer class="footer">
+  <div class="footer-left">
+    Email our <a href="mailto:support@xyla.io">support team</a>
+  </div>
+  <div class="footer-right">
+    <div>&copy; 2019-{{ currentYear }} Xyla, Inc.&nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank" href="https://hello.xyla.io/privacy-policy">Privacy Policy</a></div>
+  </div>
+</footer>

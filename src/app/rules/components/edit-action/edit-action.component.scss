@@ -1,0 +1,10 @@
+@import 'style-guide';
+
+label {
+  &.parenthesis {
+    margin-left: 10px;
+  }
+  &.adjustment-limit {
+    margin-left: 10px;
+  }
+}

@@ -1,0 +1,23 @@
+.nav-link {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-bottom: 2px !important;
+  border-bottom: 2px solid rgba(0,0,0,0);
+}
+
+.nav-link:hover {
+  cursor: pointer;
+}
+
+.nav-link.active {
+  border-bottom: 2px solid var(--xylaprimary);
+  color: inherit;
+}
+
+.nav-link.active:hover {
+  cursor: default;
+}
+
+.navbar .nav-link {
+  font-size: 14px;
+}

@@ -1,0 +1,19 @@
+<div id="container">
+  <!-- TODO : show this tab bar when we have more entity types -->
+  <!-- <div class="ui secondary pointing menu"> -->
+  <!--   <a *ngFor="let link of entityTypeLinks" -->
+  <!--     class="item" -->
+  <!--     [class.active]="link.entity === routeEntity" -->
+  <!--     [routerLink]="'/' + link.path" -->
+  <!--     > -->
+  <!--     {{ link.displayName }} -->
+  <!--   </a> -->
+  <!-- </div> -->
+</div>
+<div *ngIf="routeEntity">
+  <app-list-entities
+    [companyIdentifier]="companyIdentifier"
+    [entityName]="routeEntity"
+    >
+  </app-list-entities>
+</div>

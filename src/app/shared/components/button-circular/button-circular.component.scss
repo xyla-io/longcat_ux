@@ -1,0 +1,27 @@
+@import 'style-guide';
+
+button {
+  margin-left: 10px;
+  border: none;
+  background: transparent;
+  padding: 0;;
+  border-radius: 50%;
+  line-height: 1;
+
+  i.circle.icon {
+    margin: 0;
+    position: relative;
+    top: -0.5px;
+    padding: 1px;
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+    }
+    &.purple {
+      color: $color-info-muted !important;
+    }
+    &.green {
+      color: var(--xylagreen) !important;
+    }
+  }
+}

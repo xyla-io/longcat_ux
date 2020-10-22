@@ -1,0 +1,91 @@
+<div class="row-filter">
+  <ng-container *ngTemplateOutlet="variableRowFilter.column.constant ? displayConstant : selectFilterColumn; context: {
+      filter: variableRowFilter,
+      filterComponentType: 'column'
+    }"
+    >
+  </ng-container>
+
+  <ng-container *ngIf="workingRowFilter.column || variableRowFilter.column.constant">
+    <ng-container *ngTemplateOutlet="variableRowFilter.operator.constant ? displayConstant : selectFilterOperator; context: {
+        filter: variableRowFilter,
+        filterComponentType: 'operator'
+      }"
+      >
+    </ng-container>
+
+    <ng-container *ngTemplateOutlet="variableRowFilter.value.constant ? displayConstant : selectFilterValue; context: {
+        filter: variableRowFilter,
+        filterComponentType: 'value'
+      }"
+      >
+    </ng-container>
+  </ng-container>
+
+  <ng-template #displayConstant let-filter="filter" let-filterComponentType="filterComponentType">
+    <ng-container *ngIf="filter" [ngSwitch]="filterComponentType">
+      <span *ngSwitchCase="'column'"> {{ filter.column.constant.displayName }} </span>
+      <span *ngSwitchCase="'operator'"> {{ filter.operator.constant.displayName }} </span>
+      <span *ngSwitchCase="'value'"> {{ filter.value.constant }} </span>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #selectFilterColumn let-filter="filter">
+    <select
+      (change)="onColumnChange($event)"
+      >
+      <option *ngIf="filter.optional"
+        value="_null"
+        [selected]="workingRowFilter.column === null"
+        >
+        {{ filter.optionalName }}
+      </option>
+      <option *ngFor="let choice of filter.column.choices || []"
+        [value]="choice.column"
+        [selected]="choice.column === workingRowFilter.column"
+        >
+        {{ choice.displayName }}
+      </option>
+    </select>
+  </ng-template>
+
+  <ng-template #selectFilterOperator let-filter="filter">
+    <select
+      [(value)]="workingRowFilter.operator"
+      (change)="onOperatorChange($event)"
+      >
+      <option *ngFor="let operator of filter.operator.choices || []"
+        [value]="choice.operator"
+        >
+      </option>
+    </select>
+  </ng-template>
+
+  <ng-template #selectFilterValue let-filter="filter">
+    <ng-container *ngTemplateOutlet="filterValueChoices; context: {
+        choices: filter.value.choices || filter.value.columnChoices[workingRowFilter.column]
+      }"
+      >
+    </ng-container>
+
+    <ng-template #filterValueChoices let-choices="choices">
+      <select *ngIf="choices.select"
+        (change)="onValueChange($event)"
+        >
+        <option *ngIf="filter.optional && filter.column.constant"
+          value="_null"
+          [selected]="workingRowFilter.value === null"
+          >
+          {{ filter.optionalName }}
+        </option>
+        <option *ngFor="let value of choices.select | selectionChoices"
+          [value]="value"
+          [selected]="workingRowFilter.value == value"
+          >
+          {{ value }}
+        </option>
+      </select>
+    </ng-template>
+  </ng-template>
+
+</div>

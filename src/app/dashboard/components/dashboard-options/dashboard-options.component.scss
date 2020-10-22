@@ -1,0 +1,23 @@
+@import 'style-guide';
+@import 'dashboard';
+
+.full-width {
+  height: $dashboard-options-HEIGHT;
+  width: 100%;
+  padding-top: $screen-margin-left;
+  padding-left: $screen-margin-left;
+  position: fixed;
+  display: flex;
+  align-items: baseline;
+
+  .filter {
+    position: relative;
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+    padding-bottom: 6px;
+    padding-top: 4px;
+    padding-left: 4px;
+    background: white;
+    border-radius: 3px;
+  }
+
+}

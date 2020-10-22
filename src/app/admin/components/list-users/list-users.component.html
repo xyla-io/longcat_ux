@@ -1,0 +1,117 @@
+<div id="container">
+  <div class="ui secondary pointing menu">
+    <a class="item active"> Users </a>
+  </div>
+
+  <div id="fixedHeightContainer">
+    <div id="headerSegment"
+      class="ui secondary segment"
+      >
+      <span>User</span>
+      <span>Access</span>
+    </div>
+    <div class="scrollable-table-container">
+      <div id="usersContainer" *ngIf="usersResult">
+        <div class="ui attached segment"
+          *ngFor="let user of usersResult.users"
+          >
+          <div title class="row-title">
+            <i class="ui user outline icon"></i>
+            <div class="row-title-info">
+              <p>{{ user.name }}</p>
+              <p>{{ user.email }}</p>
+            </div>
+            <div *ngIf="shouldShowAccessToggle(user)"
+              class="ui toggle fitted checkbox"
+              >
+              <input type="checkbox"
+                [checked]="isUserEnabled(user)"
+                (change)="accessToggleChanged($event, user)"
+                suiPopup
+                [popupText]="getAccessToggleTooltipText(user)"
+                popupInverted
+                popupPlacement="top"
+                >
+              <label></label>
+            </div>
+          </div>
+        </div>
+        <div class="ui attached segment"
+          *ngFor="let invitation of usersResult.invitations; index as i"
+          >
+          <div title class="row-title">
+            <i class="ui envelope outline icon"></i>
+            <div class="row-title-info">
+              <p>{{ invitation.email }}</p>
+              <p>Invitation sent on {{ invitation.invitationDate }}</p>
+            </div>
+            <div class="ui mini action input"
+              suiPopup
+              popupText="Copy invitation link"
+              popupInverted
+              popupPlacement="top"
+              >
+              <input type="text" [value]="makeInvitationLink(invitation)" readonly>
+              <button class="ui tiny basic right icon button"
+                (click)="clickCopyInvitationLink($event, invitation)"
+                >
+                <i class="copy outline icon"></i>
+              </button>
+            </div>
+            <div class="ui mini basic button resend-button"
+              [class.loading]="resendBusyIndices.has(i)"
+              (click)="clickResendInvitation(invitation, i)"
+              suiPopup
+              popupText="Resend invitation email to {{invitation.email}}"
+              popupInverted
+              popupPlacement="top"
+              >
+              Resend
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui secondary segment" id="footerSegment">
+      <div class="ui floating right floated bottom pointing dropdown left icon basic labeled button" 
+        [class.loading]="newInvitationState.sending"
+        (keyup)="$event.preventDefault()"
+        suiDropdown
+        autoClose="outsideClick"
+        [isOpen]="newInvitationState.dropdownOpen"
+        (isOpenChange)="newInvitationDropdownOpenChange($event)"
+        >
+        <i class="red envelope icon"></i> Invite New User
+        <div class="menu" 
+          suiDropdownMenu
+          menuTransition="slide up"
+          >
+          <div class="header">
+            <i class="user icon"></i>&nbsp;&nbsp;Enter Invitee Email
+          </div>
+          <div class="divider"></div>
+
+          <div class="ui icon input"
+            [class.error]="newInvitationState.error"
+            >
+            <i class="envelope icon"></i>
+            <input type="text"
+              (keyup)="newInvitationEmailChanged($event)"
+              [ngModel]="newInvitationState.email"
+              placeholder="name@example.com"
+              >
+          </div>
+          <div class="action-button ui icon compact right labeled red button"
+            [class.loading]="newInvitationState.sending"
+            [class.disabled]="newInvitationState.sending || newInvitationState.error"
+            (click)="clickSendNewInvitation()"
+            >
+            Send Invitation Email
+            <i class="icon paper plane outline icon"></i>
+          </div>
+          <div class="dropdown-spacer">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

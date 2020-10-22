@@ -1,0 +1,64 @@
+<div *ngIf="!viewRefreshing; else loading"
+  class="table-wrapper">
+  <table [nbTreeGrid]="viewModel.breakdownTree.nodes"
+    [equalColumnsWidth]="false"
+    >
+
+    <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="viewModel.breakdownTree.columnDisplayNames"></tr>
+    <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: viewModel.breakdownTree.uids"></tr>
+
+    <ng-container [nbTreeGridColumnDef]="viewModel.breakdownTree.nameColumn">
+      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef></th>
+      <td nbTreeGridCell *nbTreeGridCellDef="let row">
+        <div class="cell-liner cell-liner--name"
+          [class.level-zero]="row.level === 0"
+          [class.level-one]="row.level === 1"
+          [class.level-two]="row.level === 2"
+          [nbTooltip]="row.data[viewModel.breakdownTree.nameColumn]"
+          >
+          <div class="inner">
+            {{ row.data[viewModel.breakdownTree.nameColumn] || 'Unknown' }}
+          </div>
+          <nb-tree-grid-row-toggle
+            class="row-toggle-arrow"
+            *ngIf="row.level < template.structure.displayBreakdownIdentifiers.length - 1"
+            [expanded]="row.expanded"
+            >
+          </nb-tree-grid-row-toggle>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container
+      class="custom-columns"
+      *ngFor="let templateColumn of viewModel.breakdownTree.templateColumns; index as i"
+      [nbTreeGridColumnDef]="viewModel.breakdownTree.uids[i]"
+      >
+      <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>
+        {{viewModel.breakdownTree.columnDisplayNames[i+1]}}
+      </th>
+      <td nbTreeGridCell *nbTreeGridCellDef="let row">
+        <div class="cell-liner"
+          [class.level-one]="row.level === 1"
+          [class.level-two]="row.level === 2"
+          >
+          <app-display-format
+            [format]="templateColumn.options.format"
+            [value]="row.data[viewModel.breakdownTree.uids[i]]"
+            displayNullAs="—"
+            [class.custom-columns__cell--invalid]="row.data[viewModel.breakdownTree.uids[i]] === null"
+            >
+          </app-display-format>
+        </div>
+      </td>
+    </ng-container>
+  </table>
+</div>
+
+<ng-template #loading>
+  <div
+    class="loading-container"
+    >
+    <app-loader size="50"></app-loader>
+  </div>
+</ng-template>

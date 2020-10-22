@@ -1,0 +1,19 @@
+@import 'style-guide';
+
+:host {
+  .wrapper {
+    display: flex;
+    align-items: center;
+    font-size: 1.0rem;
+    line-height: 1;
+  }
+  .category {
+    color: $color-gray-500;
+    margin-right: 8px;
+  }
+  .name {
+    min-width: 140px;
+    font-weight: 500;
+    margin-right: 8px;
+  }
+}

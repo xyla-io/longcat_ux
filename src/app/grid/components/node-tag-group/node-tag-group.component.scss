@@ -1,0 +1,91 @@
+@import 'style-guide';
+
+:host {
+  display: flex;
+  width: calc(100% - 70px);
+  align-items: center;
+  justify-content: space-between;
+
+  .no-parser-group {
+    display: flex;
+  }
+
+  .left-side {
+    display: flex;
+    align-items: center;
+  }
+
+  .entity-label {
+    min-width: 80px;
+    &.adgroup {
+      min-width: 90px;
+    }
+    &.ad, &.asset {
+      min-width: 100px;
+    }
+  }
+
+  app-badge-parser-key {
+    margin-right: 30px;
+  }
+
+  .action-button.delete {
+    &:hover {
+      color: $color-primary-500;
+      cursor: pointer;
+    }
+  }
+  .clickable-configuration-area {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 6px;
+    app-badge-parser-key {
+      min-width: 100px;
+      text-align: center;
+    }
+    &.configurable {
+      cursor: pointer;
+      &:hover {
+        background: $color-gray-100;
+        .entity-name {
+          .delimiter {
+            padding: 0px 4px;
+          }
+        }
+      }
+    }
+  }
+  .configuration-incomplete-badge {
+    font-weight: 500;
+    padding: 4px 10px;
+    color: $color-warning-500;
+  }
+  .entity-name {
+    .category-name {
+      padding: 4px 6px;
+      border-radius: 4px;
+      background-color: $color-gray-100;
+      font-weight: 400;
+    }
+    .delimiter {
+      transition: padding 0.5s;
+      font-weight: 800;
+      padding: 0px 1px;
+      color: $color-info-500;
+      text-align: center;
+    }
+    .key {
+      .category-name {
+        background: transparent;
+        box-shadow: none;
+        color: $color-gray-500;
+        font-weight: 800;
+        padding: 0px;
+      }
+      .delimiter {
+        padding: 0px 1px;
+      }
+    }
+  }
+}

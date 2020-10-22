@@ -1,0 +1,105 @@
+@import 'style-guide';
+
+.wrapper {
+  position: relative;
+  .liner {
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    background-color: white;
+    border-radius: 8px;
+    align-items: center;
+    width: calc(100% - 1px);
+    min-height: 27px;
+    &:not(.no-shadow) {
+      box-shadow: $shadow-subtle;
+    }
+    i {
+      color: $color-title-primary;
+      margin-left: 8px;
+      margin-right: 8px;
+      position: relative;
+      top: -1px;
+    }
+
+    .selected-options {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      .option {
+        cursor: default;
+        background-color: $emblem-color-basic;
+        margin: 4px;
+        border-radius: $emblem-border-radius-normal;
+        padding: $emblem-padding-normal;
+        color: $color-title-primary;
+        font-weight: 500;
+        font-size: 1.0rem;
+        width: fit-content;
+        white-space: normal;
+        display: flex;
+        align-items: center;
+        line-height: 1;
+        &:hover {
+          .times.icon {
+            color: $color-primary-500;
+          }
+        }
+        &.placeholder {
+          background: none;
+          font-weight: 400;
+          font-size: 0.85rem;
+          cursor: pointer;
+        }
+        .times.icon {
+          margin-left: 2px;
+          margin-right: 0;
+          color: rgba(0,0,0,0.5);
+          cursor: pointer;
+          position: relative;
+          top: 0.5px;
+          transition: font-size 0.1s, color 0.4s;
+        }
+      }
+    }
+
+    .caret.down.icon {
+      color: rgba(0,0,0,0.5);
+      align-self: flex-start;
+      margin-right: 4px;
+      margin-top: 4px;
+    }
+  }
+  .unselected-options {
+    height: 0;
+    max-height: 300px;
+    overflow: auto;
+    background-color: white;
+    box-shadow: $shadow-dropdown;
+    position: absolute;
+    $margin-left-right: 8px;
+    left: $margin-left-right;
+    width: calc(100% - calc(#{$margin-left-right} * 2));
+    z-index: 10;
+    border-bottom-left-radius: $input-border-radius;
+    border-bottom-right-radius: $input-border-radius;
+    transition: height 0.5s;
+    &.open {
+      height: auto;
+    }
+    .option {
+      padding: 4px;
+      color: rgba(0,0,0,0.75);
+      white-space: normal;
+      font-size: 1.0rem;
+      &:not(.placeholder):hover {
+        cursor: pointer;
+        background-color: $option-focus-background;
+      }
+      &.placeholder {
+        color: rgba(0,0,0,0.5);
+        font-style: italic;
+      }
+    }
+  }
+}

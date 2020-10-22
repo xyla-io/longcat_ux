@@ -1,0 +1,8 @@
+#container {
+  padding: 40px;
+}
+
+.long-job-name {
+  font-family: monospace;
+  font-size: 0.5rem;
+}

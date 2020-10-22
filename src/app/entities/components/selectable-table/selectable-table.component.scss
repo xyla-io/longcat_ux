@@ -1,0 +1,66 @@
+@import 'tables';
+@import 'selectable-tables';
+@import 'buttons';
+
+.icon {
+  margin: 0 auto;
+}
+
+.scrollable-table-container {
+  margin-top:20px;
+}
+
+#bulkTaggingButton>.menu>sui-select {
+  min-width: 160px;
+  padding: 10px;
+  padding-bottom: 0;
+}
+
+#bulkTaggingButton .divider {
+  margin-bottom: 16px;
+}
+
+#bulkTaggingButton>.menu {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  min-width: 200px;
+}
+
+#bulkTaggingButton>.menu>app-raw-export {
+  float: right;
+}
+
+#bulkTaggingButton>.menu>app-file-upload {
+  float: right;
+}
+
+#bulkTaggingButton .header {
+  text-align: center;
+}
+
+#currentSelectionButton {
+  padding-right: 20px;
+  position: relative;
+  top: -4px;
+  height: 14px;
+}
+
+#currentSelectionButton>.label {
+  position: relative;
+  left: 26px;
+  top: -1px;
+}
+
+#paddingCell {
+  border-top: none;
+  cursor: default;
+}
+
+#paddingCell.content-loaded {
+  border-top: 1px solid rgba(34,36,38,0.05);
+}
+
+#loaderRow td {
+  padding-top: 150px;
+}

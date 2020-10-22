@@ -1,0 +1,55 @@
+<table class="ui table">
+  <thead>
+    <tr>
+      <ng-container *ngIf="queryExports.length">
+        <th class="three wide">Name</th>
+        <th class="five wide">Description</th>
+        <th class="three wide">Output Type</th>
+        <th class="">Last Export</th>
+        <th class=""></th>
+        <th class=""></th>
+      </ng-container>
+      <ng-container *ngIf="!queryExports.length">
+        <th></th>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="!queryExports.length" height="200px">
+      <td style="text-align: center">
+        No Outbound Items
+      </td>
+    </tr>
+    <tr *ngFor="let export of queryExports">
+      <td class="middle aligned">{{export.displayName}}</td>
+      <td class="middle aligned">
+        {{export.description}}
+      </td>
+      <td class="middle aligned">
+        <i class="grey file alternate icon"></i>
+        &nbsp;&nbsp;&nbsp;CSV Export
+      </td>
+      <td class="middle aligned">
+        <i class="green check icon"></i>
+        &nbsp;&nbsp;&nbsp;{{ export.displayLastExportTime }}
+      </td>
+      <td class="middle center aligned">
+      </td>
+      <td class=" middle right aligned collapsing">
+        <app-raw-export
+          [urlProvider]="this"
+          [resourceKey]="export.path"
+          (startDownloadEvent)="downloadStarted()"
+          viewType="dropdown"
+          >
+        </app-raw-export>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="6">
+      </th>
+    </tr>
+  </tfoot>
+</table>

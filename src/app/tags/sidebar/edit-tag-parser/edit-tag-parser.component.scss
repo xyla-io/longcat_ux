@@ -1,0 +1,129 @@
+@import 'style-guide';
+
+.description {
+  width: 100%;
+  text-align: center;
+  color: $color-gray-500;
+  line-height: 2;
+}
+
+.delimiter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.select-delimiter {
+  display: flex;
+  flex-direction: column;
+  select {
+    position: relative;
+    left: -11px;
+    max-width: 210px;
+  }
+}
+
+input.entity-sample {
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+}
+
+.parse-entity-sample {
+  label {
+    margin-bottom: 12px;
+  }
+  .button-row {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  margin-bottom: 30px;
+}
+
+.tag-instructions {
+  margin-bottom: 12px;
+}
+
+.parser-field-grid {
+  box-shadow: $shadow-subtle inset;
+  border-radius: 12px;
+  padding: 17px;
+  overflow: auto;
+  .parser-field-row, .parser-field-header {
+    display: grid;
+    &:not(.manual) {
+      grid-template-columns: 20px 50% auto;
+    }
+    &.manual {
+      grid-template-columns: 20px auto 0 50px;
+      &.key {
+        grid-template-columns: 20px 105px auto 0;
+      }
+    }
+    align-items: center;
+  }
+  .parser-field-header {
+    margin-bottom: 8px;
+  }
+  .parser-field-row {
+    .field-number {
+      font-weight: 600;
+    }
+    .parser-field-category {
+      padding: 4px 8px 4px 0px;
+      input {
+        font-weight: 400;
+        width: 100%;
+        text-align: left;
+        border: none;
+        padding: 6px;
+        border: 1px solid $color-gray-200;
+      }
+    }
+    .parser-field-value {
+      padding: 4px;
+      .empty {
+        color: $color-gray-200;
+        font-style: italic;
+      }
+    }
+    .add-remove {
+      display: flex;
+    }
+    &.key {
+      .parser-field-category {
+        margin-left: 7px;
+      }
+      .parser-field-value {
+        font-weight: 500;
+        color: $parser-key-foreground;
+        background: $parser-key-background;
+        width: fit-content;
+        padding: 2px 30px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+.sample-output {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: break-word;
+  textarea {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+    outline: none !important;
+    border: none;
+    box-shadow: $shadow-subtle;
+    &:hover {
+      background: rgba(0,0,0,0.025);
+    }
+  }
+}

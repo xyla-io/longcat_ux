@@ -1,0 +1,45 @@
+<div class="wrapper" *ngIf="!search; else searchTemplate">
+  <i *ngIf="options[selection].icon as icon" [class]="icon + ' icon'"></i>
+  <label *ngIf="label">{{ label }}</label>
+  <select
+    [value]="selection"
+    (change)="onChange($event)"
+    >
+    <option
+      *ngFor="let value of Options.keys(options)"
+      [value]="value"
+      >
+      {{ options[value].displayName }}
+    </option>
+  </select>
+</div>
+
+<ng-template #searchTemplate>
+  <label *ngIf="label">{{ label }}</label>
+  <input #searchInput *ngIf="options[selection]"
+    [formControl]="searchControl" [value]="options[selection].displayName" 
+    (keydown)="onSearchKeyDown($event)"
+    (click)="onClickOpenDropdown($event)"
+    (focus)="onClickOpenDropdown($event)"
+    class="search-input"
+    [class.open]="searchDropdownOpen"
+    />
+
+  <ng-container *ngIf="searchDropdownOpen">
+    <div class="select-menu">
+      <cdk-virtual-scroll-viewport [itemSize]="itemHeight" class="options-viewport">
+        <div class="search-option none" *ngIf="!searchOptions.length">No results found...</div>
+        <div *cdkVirtualFor="let option of searchOptions; index as i"
+          class="search-option"
+          [class.active]="false"
+          (click)="onSelectOption(option, i)"
+          (mouseover)="onHoverOption(option, i)"
+          [class.focused]="focusedIndex === i"
+          >
+          {{ option.displayName }}
+        </div>
+      </cdk-virtual-scroll-viewport>
+      
+    </div>
+  </ng-container>
+</ng-template>

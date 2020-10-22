@@ -1,0 +1,12 @@
+<app-selectable-table
+   [entityName]="entity"
+   [queryResult]="entities"
+   [columnTemplates]="columnTemplates"
+   [changeFilterEventEmitter]="changeFilterEventEmitter"
+   [filterDataProvider]="this"
+   [isLoadingEntities]="isLoadingEntities"
+   (addTag)="onTag($event)"
+   (addSubtag)="onSubtag($event)"
+   (removeTag)="onRemoveTag($event)"
+   >
+</app-selectable-table>

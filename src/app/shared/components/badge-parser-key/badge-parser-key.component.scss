@@ -1,0 +1,44 @@
+@import 'style-guide';
+
+.parser-key-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: $shadow-subtle inset;
+  overflow-wrap: anywhere;
+  max-width: 200px;
+  .parser-key-header {
+    font-weight: 500;
+  }
+  &:hover {
+    nb-icon {
+      color: $color-gray-500;
+    }
+  }
+
+  nb-icon {
+    color: $color-gray-200;
+    font-size: 1rem;
+  }
+
+}
+
+.parser-key-value {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: $parser-key-foreground;
+  background: $parser-key-background;
+  border-radius: 6px;
+  &.full {
+    margin-top: 10px;
+    padding: 2px 30px;
+  }
+  &.simple {
+    padding: 2px 8px;
+    font-size: 0.9rem;
+  }
+}

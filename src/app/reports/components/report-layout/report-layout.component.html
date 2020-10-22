@@ -1,0 +1,28 @@
+<span *ngIf="element.layout.orientation === LayoutOrientation.Vertical">
+  <span *ngFor="let child of element.children"
+    [class.modeContentLayout]="child.type===ReportElementType.ModeContent"
+    [class.xylaContentLayout]="child.type===ReportElementType.XylaContent"
+    >
+    <app-report-element
+      [element]="child"
+      [reportPath]="reportPath"
+      >
+    </app-report-element>
+  </span>
+</span>
+
+<table *ngIf="element.layout.orientation === LayoutOrientation.Horizontal">
+  <tr>
+    <td *ngFor="let child of element.children"
+      [class.modeContentLayout]="child.type===ReportElementType.ModeContent"
+      [class.xylaContentLayout]="child.type===ReportElementType.XylaContent"
+      >
+      <app-report-element
+        [element]="child"
+        [reportPath]="reportPath"
+        >
+      </app-report-element>
+    </td>
+  </tr>
+</table>
+

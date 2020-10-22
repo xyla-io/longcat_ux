@@ -1,0 +1,62 @@
+@import 'style-guide';
+
+:host {
+  position: relative;
+}
+
+.wrapper {
+  padding: 0 8px;
+  i {
+    margin-right: 15px;
+    color: $color-title-primary;
+  }
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+
+}
+
+
+.search-input {
+  height: 24px;
+  width: 100%;
+  font-weight: 400;
+  text-align: left;
+  font-weight: 600;
+  cursor: pointer;
+  &.open {
+    cursor: text;
+    box-shadow: $input-focus-shadow;
+  }
+}
+
+.select-menu {
+  max-height: 200px;
+  $padding: 4px;
+  width: calc(100% - calc(#{$padding} * 3));
+  padding-left: $padding;
+  position: absolute;
+  margin-top: 1px;
+  z-index: 100;
+  .options-viewport {
+    background: white;
+    box-shadow: $shadow-dropdown;
+    border-bottom-left-radius: $input-border-radius;
+    border-bottom-right-radius: $input-border-radius;
+  }
+  .search-option {
+    height: 20px;
+    text-align: left;
+    padding: 4px 12px;
+    &:not(.none):hover {
+      cursor: pointer;
+    }
+    &.none {
+      color: rgba(0,0,0,0.5);
+      font-style: italic;
+    }
+    &.focused {
+      background-color: $option-focus-background;
+    }
+  }
+}

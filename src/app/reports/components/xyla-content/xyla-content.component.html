@@ -1,0 +1,86 @@
+<div id="container">
+  <ng-container *ngIf="dashboardContent; else noDashboardContent">
+    <div *ngIf="showDashboardOptions">
+      <app-dashboard-options
+        [masterTemplate]="masterTemplate"
+        >
+      </app-dashboard-options>
+    </div>
+    <nb-layout class="main-layout">
+      <nb-layout-column *ngIf="!floatingMenuCollapsed"
+        class="summary-column"
+        >
+        <div #dashboardColumn style="width: 100%; height: 100%">
+          <app-group-summary-panel
+            [resizePanelTop$]="showDashboardOptions$"
+            [group]="dashboardContent.structure.groups.summaryPanel"
+            [dataRefreshing]="templateDataRefreshingMap[dashboardContent.structure.groups.summaryPanel.path]"
+            (templateUpdate)="onTemplateUpdate($event)"
+            >
+          </app-group-summary-panel>
+        </div>
+      </nb-layout-column>
+      <nb-layout-column>
+        <div #dashboardColumn style="width: 100%; height: 100%">
+          <ng-container *ngFor="let template of dashboardContent.structure.decks.breakdownTable.structure.templates">
+            <app-block-breakdown-table
+              class="breakdown-table"
+              [template]="template"
+              [dataRefreshing]="templateDataRefreshingMap[template.path]"
+              (templateUpdate)="onTemplateUpdate($event)"
+              >
+            </app-block-breakdown-table>
+          </ng-container>
+        </div>
+      </nb-layout-column>
+      <nb-sidebar
+        class="sidebar-editor"
+        [right]="true"
+        [state]="sidebarContentType === SidebarContentType.Hidden ? 'collapsed' : 'expanded'"
+        >
+        <app-sidebar-content
+          [updateConfirmation$]="sidebarUpdateConfirmation$"
+          (templateUpdate)="onTemplateUpdate($event)"
+          >
+        </app-sidebar-content>
+      </nb-sidebar>
+    </nb-layout>
+    <div class="options">
+      <app-floating-button
+        label="Edit Summary"
+        icon="edit-outline"
+        [collapsed]="floatingMenuCollapsed"
+        (itemClick)="onClickEditSummary()"
+        >
+      </app-floating-button>
+      <app-floating-button
+        label="Collapse"
+        collapsedLabel="Expand"
+        icon="arrowhead-left-outline"
+        collapsedIcon="arrowhead-right-outline"
+        [collapsed]="floatingMenuCollapsed"
+        (itemClick)="onClickCollapse()"
+        >
+      </app-floating-button>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #noDashboardContent>
+  <nb-layout>
+    <nb-layout-column>
+    </nb-layout-column>
+    <nb-layout-column>
+      <nb-card>
+        <nb-card-body>
+          <div class="loading-container">
+            <div>Preparing your dashboard</div>
+            <app-loader size="50"></app-loader>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-layout-column>
+    <nb-layout-column>
+    </nb-layout-column>
+  </nb-layout>
+</ng-template>

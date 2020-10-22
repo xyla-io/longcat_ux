@@ -1,0 +1,26 @@
+<div #submenu class="dropdown-menu" [class.show]="isMenuOpen">
+  <ul *ngIf="parent">
+    <li *ngFor="let child of parent.targets; index as i">
+      <div *ngIf="child.type!=='node'"
+        class="nav-item dropdown-item"
+        (click)="clickLeaf(i)"
+        (mouseenter)="hoverEnterLeaf(i)"
+        (mouseleave)="hoverExitLeaf(i)">
+        <a class="nav-link" [routerLink]="getLink(child)"> {{child.displayName}} </a>
+      </div>
+      <div *ngIf="child.type==='node'"
+        class="dropdown-item dropdown-submenu"
+        (mouseenter)="hoverEnterNode(i)"
+        (mouseleave)="hoverExitNode(i)">
+        <a class="nav-link" tabindex="-1" (click)="clickNode(i)"> {{child.displayName}} <span class="submenu-arrow">&#x2b80;</span></a>
+        <app-nav-breadcrumbs-submenu
+          (itemSelected)="onItemSelected($event)"
+          [isMenuOpen]="i===openChildNodeIndex"
+          [linkBuilder]="linkBuilder"
+          [parent]="children[child.identifier]"
+          [children]="children">
+        </app-nav-breadcrumbs-submenu>
+      </div>
+    </li>
+  </ul>
+</div>

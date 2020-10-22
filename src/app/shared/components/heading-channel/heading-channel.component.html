@@ -1,0 +1,9 @@
+<h6 class="channel-header">
+  <img class="logo"
+  [ngStyle]="{
+    'background': ChannelOps.channelOptions[channel].color
+  }"
+  [src]="ChannelIconService.iconForChannel(channel)"
+  >
+  {{ ChannelOps.channelOptions[channel].displayName }}
+</h6>

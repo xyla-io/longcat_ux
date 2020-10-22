@@ -1,0 +1,66 @@
+<div *ngIf="viewType === 'card'" id="fullwidth">
+  <div id="card" class="content-container ui card">
+    <form class="content-container">
+      <div id="exportLabel">Raw Export:</div>
+      <div class="ui labeled input">
+        <input #downloadNameInput 
+          id="downloadNameInput"
+          type="text"
+          [value]="getDefaultDownloadName()"
+          [size]="getDefaultDownloadName().length + 5"/>
+        <div id="downloadNameExtension" class="ui label" >.csv</div>
+      </div>
+      <button #exportButton
+        id="exportButton"
+        type="submit"
+        class="ui icon button btn btn-primary-xyla" 
+        [class.loading]="workState === WorkState.working"
+        [class.backgroundSuccess]="workState === WorkState.complete"
+        (click)="clickDownloadButton($event)"
+        >
+        <i
+          class="icon"
+          [class.download]="workState === WorkState.ready"
+          [class.check]="workState === WorkState.complete"
+        ></i>
+      </button>
+    </form>
+  </div>
+</div>
+<div *ngIf="viewType === 'dropdown'">
+  <div
+    #exportButton
+    class="ui icon {{pointing}} tiny pointing dropdown basic button primary-action"
+    suiDropdown
+    (click)="focusDownloadNameInput($event)"
+    [ngClass]="{'loading disabled': workState === WorkState.working }"
+    >
+    <i class="download icon"></i>
+    <div suiDropdownMenu
+      class="menu"
+      [style.right]="xOffset + 'px'"
+      >
+      <div class="header">
+        Download CSV
+      </div>
+      <div class="ui labeled input">
+        <input #downloadNameInput 
+          id="downloadNameInput"
+          type="text"
+          [value]="getDefaultDownloadName()"
+          [size]="getDefaultDownloadName().length + 5"/>
+        <div id="downloadNameExtension" class="ui label" >.csv</div>
+      </div>
+      <form>
+        <div
+          (click)="clickDownloadButton($event)"
+          class="ui red icon compact right labeled button item primary-action action-button dropdown-button-margin"
+          >
+          <i class="download icon"></i>
+          Download
+        </div>
+      </form>
+      <div class="dropdown-spacer"></div>
+    </div>
+  </div>
+</div>

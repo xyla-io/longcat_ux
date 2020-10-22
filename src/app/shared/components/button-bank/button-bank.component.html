@@ -1,0 +1,31 @@
+<div class="bank">
+  <ng-container *ngFor="let button of buttons; index as i">
+    <span *ngIf="button.tooltip"
+      [nbTooltip]="button.tooltip"
+      >
+      <ng-container *ngTemplateOutlet="buttonTemplate; context: {button: button}"></ng-container>
+    </span>
+    <span *ngIf="!button.tooltip">
+      <ng-container *ngTemplateOutlet="buttonTemplate; context: {button: button}"></ng-container>
+    </span>
+  </ng-container>
+</div>
+
+<ng-template #buttonTemplate let-button="button">
+  <button
+    nbButton
+    class="bank__button"
+    [disabled]="button.disabled"
+    status="basic"
+    size="small"
+    (click)="onButtonClick(button.identifier)"
+    >
+    <nb-icon
+      icon="plus"
+      class="bank__button-icon"
+      [class.bank__button-icon--disabled]="button.disabled"
+      >
+    </nb-icon>
+    {{ button.displayName }}
+  </button>
+</ng-template>

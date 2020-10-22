@@ -1,0 +1,193 @@
+<div class="close-button">
+  <button nbButton ghost
+    size="giant"
+    shape="round"
+    status="basic"
+    (click)="onClickClose($event)"
+    >
+    <nb-icon icon="close-outline"></nb-icon>
+  </button>
+</div>
+
+<ng-container *ngIf="content && intermediateTemplate">
+  <div class="heading">
+
+    <div *ngIf="content.pages.length === 1" class="heading__spacer"></div>
+
+    <span class="heading__title">{{ content.displayTitle }}</span>
+    <span *ngIf="!content.hideSubtitle"
+      class="heading__subtitle"
+      >
+      <span>: </span>
+      <span *ngIf="intermediateTemplate.structure.displayName">{{ inputTemplate.structure.displayName }}</span>
+      <span *ngIf="!intermediateTemplate.structure.displayName">{{ masterTemplate.structure.defaultDisplayName }}</span>
+    </span>
+
+    <ng-container *ngIf="content.pages.length > 1">
+      <div *ngIf="content.displayType === SidebarDisplayType.Steps"
+        class="heading__steps"
+        >
+        <span *ngFor="let step of content.pages; index as i">
+          <span
+            *ngIf="!pageValidation && i !== contentPageNumber; else noPopoverStep"
+            [nbPopover]="popoverTemplate"
+            [nbPopoverContext]="{
+              validationMessage: validationMessage,
+              suffix: ' first'
+            }"
+            nbPopoverTrigger="hover"
+            >
+            <ng-container
+              *ngTemplateOutlet="headingStep; context: { index: i, currentPage: contentPageNumber }"
+              >
+            </ng-container>
+          </span>
+          <ng-template #noPopoverStep>
+            <ng-container
+              *ngTemplateOutlet="headingStep; context: { index: i, currentPage: contentPageNumber }"
+              >
+            </ng-container>
+          </ng-template>
+          <nb-icon *ngIf="i < content.pages.length - 1"
+            class="heading__step-separator"
+            icon="chevron-right"
+            >
+          </nb-icon>
+        </span>
+      </div>
+    </ng-container>
+
+    <div *ngIf="content.pages[contentPageNumber]"
+      class="heading__instruction">
+      {{ content.pages[contentPageNumber].heading }}
+    </div>
+  </div>
+
+  <div class="body">
+    <ng-container *ngIf="content" appSidebarContent
+      [content]="content"
+      [pageNumber]="contentPageNumber"
+      [inputTemplate]="intermediateTemplate"
+      [masterTemplate]="masterTemplate"
+      (templateUpdate)="onTemplateUpdate($event)"
+      (validationChange)="onPageValidationChange($event)"
+      >
+    </ng-container>
+  </div>
+
+  <span
+    *ngIf="!pageValidation"
+    [nbPopover]="popoverTemplate"
+    [nbPopoverContext]="{
+      validationMessage: validationMessage,
+      suffix: ' first'
+    }"
+    nbPopoverTrigger="hover"
+    class="advance"
+    >
+    <ng-container
+      *ngTemplateOutlet="nextButton"
+      >
+    </ng-container>
+  </span>
+  <span
+    *ngIf="pageValidation"
+    class="advance"
+    >
+    <ng-container 
+      *ngTemplateOutlet="nextButton"
+      >
+    </ng-container>
+  </span>
+
+  <span
+    *ngIf="!pageValidation"
+    [nbPopover]="popoverTemplate"
+    [nbPopoverContext]="{
+      validationMessage: validationMessage,
+      suffix: ' before saving'
+    }"
+    nbPopoverTrigger="hover"
+    class="save"
+    >
+    <ng-container
+      *ngTemplateOutlet="saveButton"
+      >
+    </ng-container>
+  </span>
+  <span
+    *ngIf="pageValidation"
+    class="save"
+    >
+    <ng-container 
+      *ngTemplateOutlet="saveButton"
+      >
+    </ng-container>
+  </span>
+
+</ng-container>
+
+<ng-template #headingStep let-index="index" let-currentPage="currentPage">
+  <span
+    class="heading__step"
+    [class.heading__active-step]="index === currentPage"
+    (click)="onClickStep(index)"
+    >
+    <ng-container *ngIf="index !== currentPage; else activeStepIcon">
+      <ng-container *ngIf="index < currentPage; else incompleteStepIcon">
+        <nb-icon icon="checkmark-circle-2"></nb-icon>
+      </ng-container>
+    </ng-container>
+    <ng-template #activeStepIcon>
+      <nb-icon icon="radio-button-off"></nb-icon>
+    </ng-template>
+    <ng-template #incompleteStepIcon>
+      <nb-icon icon="radio-button-off"></nb-icon>
+    </ng-template>
+    Step {{ index + 1 }}
+  </span>
+</ng-template>
+
+<ng-template #saveButton>
+  <button nbButton
+    *ngIf="saveButtonText"
+    class="save__button"
+    [nbSpinner]="isSaving"
+    [disabled]="(!isDirty || !pageValidation) || isSaving"
+    (click)="onClickSave($event)"
+    shape="round"
+    status="info"
+    hero
+    >
+    <div class="save__button-inner">
+      {{ saveButtonText }}
+    </div>
+  </button>
+</ng-template>
+
+<ng-template #nextButton>
+  <button nbButton
+    *ngIf="nextButtonText"
+    class="advance__button"
+    [nbSpinner]="isSaving"
+    [disabled]="!pageValidation || isSaving"
+    (click)="onClickNext($event)"
+    status="info"
+    shape="round"
+    ghost
+    >
+    {{ nextButtonText }}
+    <nb-icon icon="chevron-right"></nb-icon>
+  </button>
+</ng-template>
+
+<ng-template #popoverTemplate let-data>
+  <div
+    class="error-popover"
+    >
+    <span *ngIf="data.validationMessage; else defaultMessage">{{ data.validationMessage + data.suffix }}</span>
+    <ng-template #defaultMessage>
+      Please complete the current step {{ data.suffix }}
+    </ng-template>
+  </div>
+</ng-template>

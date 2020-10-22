@@ -1,0 +1,16 @@
+@import 'style-guide';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+
+  .name {
+    color: $label-color;
+    font-size: 1.0rem;
+    font-weight: 500;
+  }
+  app-button-circular {
+    position: relative;
+    top: 2px;
+  }
+}

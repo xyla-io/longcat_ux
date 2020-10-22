@@ -1,0 +1,10 @@
+<div *ngIf="toast"
+  [class]="'wrapper ' + toast.type"
+  [suiTransition]="transitionController"
+  >
+  <div class="liner">
+    <i [class]="'ui ' + toast.icon + ' icon toast-icon'"></i>
+    <span class="message">{{toast.message}}</span>
+    <i class="ui small times icon" (click)="onClickDismiss($event)"></i>
+  </div>
+</div>

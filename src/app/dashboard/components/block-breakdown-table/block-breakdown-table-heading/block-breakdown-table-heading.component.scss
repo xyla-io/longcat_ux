@@ -1,0 +1,18 @@
+@import 'style-guide';
+@import 'dashboard';
+
+.block__heading {
+  margin-left: 8px;
+
+  .block__title {
+    .title__menu, .title__menu:hover, .title__menu:focus {
+      background-color: rgba(0,0,0,0);
+      border: none;
+      color: black;
+      font-size: 38px;
+      margin-left: 10px;
+      padding: 4px;
+    }
+  }
+}
+

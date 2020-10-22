@@ -1,0 +1,14 @@
+.section {
+  display: grid;
+  grid-template-columns: 100px 50% auto 100px 20%;
+  align-items: center;
+  padding: 4px 12px;
+  .label {
+    color: white;
+    font-size: 1rem;
+    margin-right: 12px;
+  }
+  &.condensed {
+    grid-template-columns: auto 20px auto;
+  }
+}

@@ -1,0 +1,41 @@
+@import 'style-guide';
+
+.wrapper {
+  position: relative;
+  z-index: 100;
+  padding: 10px 20px;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: $shadow-subtle;
+  max-width: 500px;
+  &.success {
+    color: var(--xylagreen);
+  }
+  &.error {
+    color: $color-primary-300;
+  }
+  &.warning {
+    color: $color-warning-500;
+  }
+  .liner {
+    display: flex;
+    align-items: center;
+    .toast-icon {
+      position: relative;
+      top: -2px;
+    }
+    .message {
+      font-weight: bold;
+      white-space: break-spaces;
+      margin-left: 12px;
+      margin-right: 12px;
+    }
+    .times.icon {
+      position: absolute;
+      top: 5px;
+      right: 0px;
+      opacity: 0.5;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<ag-grid-angular
+  style="height: 100%; width: 100%"
+  *ngIf="gridOptions"
+  class="ag-theme-balham grid io-grid"
+  [columnDefs]="columnDefs"
+  [gridOptions]="gridOptions"
+  (gridReady)="onGridReady($event)"
+  [sideBar]="gridSideBar"
+  [rowData]="rowData"
+  >
+</ag-grid-angular>

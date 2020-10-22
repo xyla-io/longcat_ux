@@ -1,0 +1,24 @@
+@import 'style-guide';
+@import 'dashboard';
+
+#container {
+  height: 100%;
+  background: $main-background-color;
+}
+
+.summary-column {
+  flex: unset !important;
+  padding-left: 0 !important;
+}
+
+.options {
+  position: fixed;
+  bottom: calc(#{$footer-height} + 20px);
+  left: $screen-margin-left;
+  z-index: 100;
+}
+
+.loading-container {
+  font-weight: 600;
+  margin-bottom: 30px;
+}

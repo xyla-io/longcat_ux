@@ -1,0 +1,12 @@
+.dropdown-item {
+  font-size: 14px;
+}
+
+.dropdown-item:active {
+  background-color: #f8f9fa;
+  color: inherit;
+}
+
+.dropdown-spacer {
+  height: 10px;
+}

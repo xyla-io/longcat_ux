@@ -1,0 +1,42 @@
+<div class="item-content">
+  <div class="item-content__heading">
+    Options
+  </div>
+  <div *ngFor="let columnIdentifier of columnCategory.columnIdentifiers">
+    <label [for]="columnIdentifier"
+      class="radio">
+      <input
+        type="radio"
+        name="column"
+        class="item-content__option"
+        [value]="columnIdentifier"
+        (change)="onColumnRadioChange($event)"
+        [checked]="workingDisplayColumn.identifier === columnIdentifier"
+        >
+      <ng-container *ngTemplateOutlet="columnRadio; context: {
+          templateColumn: templateColumnMap.get(columnIdentifier),
+          isSelected: columnIdentifier === workingDisplayColumn.identifier
+        }"
+        >
+      </ng-container>
+      <span class="radio__checkmark"></span>
+    </label>
+  </div>
+</div>
+
+<ng-template #columnRadio
+  let-templateColumn="templateColumn"
+  let-isSelected="isSelected"
+  >
+  {{ templateColumn.displayName }}
+
+  <div *ngIf="isSelected && templateColumn.options.variableRowFilters as variableRowFilters">
+    <app-row-filter *ngFor="let variableRowFilter of variableRowFilters; index as filterIndex"
+      class="row-filter"
+      [variableRowFilter]="variableRowFilter"
+      [rowFilter]="rowFilterMap.get(variableRowFilter.metadata.identifier)"
+      (rowFilterChange)="onRowFilterChange($event)"
+      >
+    </app-row-filter>
+  </div>
+</ng-template>

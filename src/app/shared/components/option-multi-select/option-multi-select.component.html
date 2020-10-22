@@ -1,0 +1,27 @@
+<div class="wrapper">
+  <div class="liner" (click)="onClickLiner($event)"
+    [class.no-shadow]="noShadow"
+    >
+    <i [class]="icon + ' icon'"></i>
+    <div class="selected-options">
+      <div class="option" *ngFor="let option of selectedOptions">
+        {{ option.displayName }}
+        <i class="ui small times icon" (click)="onClickRemove($event, option)"></i>
+      </div>
+      <div *ngIf="selectedOptions.length === 0" class="option placeholder">
+        {{ placeholder }}
+      </div>
+    </div>
+    <i class="ui caret down icon"></i>
+  </div>
+  <div [class.open]="isOpen" class="unselected-options">
+    <div class="option" *ngFor="let option of unselectedOptions"
+      (click)="onClickAdd($event, option)"
+      >
+      {{ option.displayName }}
+    </div>
+    <div *ngIf="unselectedOptions.length === 0" class="option placeholder">
+      All options are selected
+    </div>
+  </div>
+</div>

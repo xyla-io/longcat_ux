@@ -1,0 +1,33 @@
+<div class="option-group"
+  *ngFor="let condition of conditionGroup.conditions; index as i"
+  >
+  <app-edit-condition
+    [glowing]="glowing"
+    [condition]="condition"
+    [conditionIndex]="i"
+    [groupOperator]="conditionGroup.operator"
+    [channel]="channel"
+    [taskSetType]="taskSetType"
+    [allowAddCondition]="allowMultipleConditions"
+    [allowDeleteCondition]="conditionGroup.conditions.length > 1"
+    (groupOperatorChange)="onGroupOperatorChange($event, i)"
+    (metricChange)="onMetricChange($event, i)"
+    (conditionOperatorChange)="onConditionOperatorChange($event, i)"
+    (metricValueChange)="onMetricValueChange($event, i)"
+    (addCondition)="onAddCondition(i)"
+    (deleteCondition)="onDeleteCondition(i)"
+    >
+  </app-edit-condition>
+</div>
+<div class="option-group"
+  *ngFor="let action of task.actions"
+  >
+  <app-edit-action
+    [action]="action"
+    [channel]="channel"
+    (actionChange)="onActionChange($event)"
+    (adjustmentValueChange)="onAdjustmentValueChange($event)"
+    (adjustmentLimitChange)="onAdjustmentLimitChange($event)"
+    >
+  </app-edit-action>
+</div>

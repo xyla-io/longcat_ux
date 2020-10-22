@@ -1,0 +1,24 @@
+<span *ngIf="element">
+  <app-mode-content
+    *ngIf="element.type === ReportElementType.ModeContent"
+    [element]="element"
+    >
+  </app-mode-content>
+  <app-periscope-content
+    *ngIf="element.type === ReportElementType.PeriscopeContent"
+    [element]="element"
+    >
+  </app-periscope-content>
+  <app-xyla-switch-content
+    *ngIf="element.type === ReportElementType.XylaContent"
+    [element]="element"
+    [reportPath]="reportPath"
+    >
+  </app-xyla-switch-content>
+  <app-report-layout
+    *ngIf="element.type === ReportElementType.Layout"
+    [element]="element"
+    [reportPath]="reportPath"
+    >
+  </app-report-layout>
+</span>

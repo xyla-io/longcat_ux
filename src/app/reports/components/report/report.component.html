@@ -1,0 +1,63 @@
+<nb-layout
+  *ngIf="reportState && reportState.report.reportVersion > 1; else viewReport"
+  >
+  <nb-layout-column>
+    <div class="liner">
+      <div class="ui primary tabular menu">
+        <a class="item create">
+          <button class="primary add"
+            (click)="onNewTabClick($event)"
+            suiPopup
+            popupText="Start New Exploration"
+            popupInverted
+            popupPlacement="top"
+            >
+            <i class="ui plus icon"></i>
+          </button>
+        </a>
+        <a *ngFor="let state of reportStates"
+          class="item"
+          [class.new]="state.status === SaveStatus.New"
+          [class.dirty]="state.status === SaveStatus.Dirty"
+          [class.active]="state === reportState"
+          (click)="onTabClick(state)"
+          >
+          <i class="ui icon"
+            [ngClass]="{
+              chart: state.status !== SaveStatus.New,
+              line: state.status !== SaveStatus.New,
+              certificate: state.status === SaveStatus.New
+            }"
+            [class.new]="state.status === SaveStatus.New"
+            >
+          </i>{{state.report.displayName}} <i *ngIf="state.status === SaveStatus.Dirty" class="ui tiny red circle icon"></i>
+        </a>
+      </div>
+      <div class="control-container">
+        <app-save-control
+          [saveStatus]="(reportState && reportState.status) || SaveStatus.Clean"
+          [textOptions]="{ titlePlaceholder: 'Title' }"
+          [newTextOptions]="{ saveText: 'Save', cancelText: '', deleteText: 'Discard Exploration', deleteIcon: 'trash' }"
+          [cleanTextOptions]="{ saveText: '', cancelText: '', deleteText: 'Delete Exploration', deleteIcon: 'trash' }"
+          [dirtyTextOptions]="{ saveText: 'Save', cancelText: 'Discard Changes', deleteText: 'Delete Exploration', deleteIcon: 'trash' }"
+          [title]="reportState.report.displayName"
+          (title)="onTitleChange($event)"
+          (save)="onSave()"
+          (cancel)="onCancel()"
+          (delete)="onDelete()"
+          >
+        </app-save-control>
+      </div>
+      <app-view-report
+        (reportUpdate)="onReportUpdate($event)"
+        >
+      </app-view-report>
+    </div>
+  </nb-layout-column>
+</nb-layout>
+<ng-template #viewReport>
+  <app-view-report
+    (reportUpdate)="onReportUpdate($event)"
+    >
+  </app-view-report>
+</ng-template>

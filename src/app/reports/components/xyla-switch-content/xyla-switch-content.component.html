@@ -1,0 +1,13 @@
+<app-xyla-grid-content
+  *ngIf="element.content && element.content.metadata && element.content.metadata.templateType === 'grid_content'; else xylaContent"
+  [element]="element"
+  [reportPath]="reportPath"
+  >
+</app-xyla-grid-content>
+<ng-template #xylaContent>
+  <app-xyla-content
+    [element]="element"
+    [reportPath]="reportPath"
+    >
+  </app-xyla-content>
+</ng-template>

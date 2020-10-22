@@ -1,0 +1,110 @@
+<div class="form-default" id="signupForm">
+  <img class="form-brand-logo" src="assets/xyla_full_logo.png" />
+  <form>
+    <h1 class="form-title">Create an account</h1>
+    <label for="inputName" class="sr-only">Full name</label>
+    <input
+      [(ngModel)]="fullName"
+      id="inputName"
+      autocomplete="name"
+      type="text"
+      class="form-control form-control-top"
+      placeholder="Full name"
+      name="name"
+      autofocus
+      >
+  </form>
+  <form>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input
+      [(ngModel)]="email"
+      type="email"
+      autocomplete="email"
+      name="email"
+      id="inputEmail"
+      class="form-control form-control-middle"
+      placeholder="Email address"
+      (keypress)="inputEmailKeyPress($event)"
+      (keydown)="inputEmailKeyPress($event)"
+      (keyup)="inputEmailKeyPress($event)"
+      >
+    <i
+      *ngIf="emailLocked"
+      id="emailInvitationLabel"
+      class="circular small grey info icon"
+      suiPopup
+      popupText="To change your invitation email address, please contact your site administrator"
+      popupPlacement="right"
+      popupInverted
+      ></i>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input
+      [(ngModel)]="password"
+      type="password"
+      autocomplete="new-password" 
+      id="inputPassword"
+      class="form-control form-control-middle"
+      placeholder="Password"
+      name="password"
+      (focus)="passwordFocused()"
+      (keyup)="passwordChanged($event)"
+      >
+    <label for="inputConfirmedPassword" class="sr-only">Confirm password</label>
+    <input
+      [(ngModel)]="confirmedPassword"
+      type="password"
+      autocomplete="new-password" 
+      id="confirmPassword"
+      class="form-control form-control-bottom"
+      name="confirmedPassword"
+      placeholder="Confirm password"
+      (keyup)="confirmationPasswordChanged($event)"
+      >
+    <i id="passwordsMatch"
+      *ngIf="passwordValidationComplete"
+      class="fa fa-check"></i>
+
+    <div id="passwordRules" *ngIf="showPasswordRules" [class.fade-in]="showPasswordRules">
+      <p>Password must contain:</p>
+      <ul class="fa-ul">
+        <li>
+          <span class="fa-li">
+            <i class="fa" [ngClass]="passwordValidation.meetsLength() ? 'fa-check' : 'fa-circle'"></i>
+          </span>
+          at least 6 characters
+        </li>
+        <li>
+          <span class="fa-li">
+            <i class="fa" [ngClass]="passwordValidation.hasLowercase() ? 'fa-check' : 'fa-circle'"></i>
+          </span>
+          a lowercase letter
+        </li>
+        <li>
+          <span class="fa-li">
+            <i class="fa" [ngClass]="passwordValidation.hasUppercase() ? 'fa-check' : 'fa-circle'"></i>
+          </span>
+          a capital letter
+        </li>
+        <li>
+          <span class="fa-li">
+            <i class="fa" [ngClass]="passwordValidation.hasNumber() ? 'fa-check' : 'fa-circle'"></i>
+          </span>
+          a number
+        </li>
+      </ul>
+    </div>
+
+    <app-message-presenter [errors]="submissionErrors"></app-message-presenter>
+    <app-submit-button
+      (onClick)="onSubmitClicked()"
+      [label]="'Sign up'"
+      [isEnabled]="submissionIsEnabled"
+      [isWaiting]="waitingForResponse">
+    </app-submit-button>
+  </form>
+  <br>
+  <div class="form-info">
+    Already have an account?&nbsp;&nbsp;<a routerLink="/signin" [queryParams]="{email: email, invitation: invitationToken}">Sign in</a>
+
+  </div>
+</div>

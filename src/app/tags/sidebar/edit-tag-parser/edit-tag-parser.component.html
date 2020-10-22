@@ -1,0 +1,117 @@
+<div class="description">
+  Auto-tags <strong>{{entityDisplayName}}</strong> names on
+</div>
+<app-heading-channel
+  [channel]="channel"
+></app-heading-channel>
+
+<div class="delimiter-row">
+  <div class="select-delimiter">
+    <label>Select delimiter:</label>
+    <select (change)="onDelimiterChange($event)"
+      [value]="selectedDelimiter"
+      class="show-arrow"
+      >
+      <option *ngFor="let delimiterOption of delimiterOptions" [value]="delimiterOption.key">
+        {{delimiterOption.key === ' ' ? '&nbsp;' :  delimiterOption.key }}&nbsp;&nbsp;&nbsp;&nbsp; {{delimiterOption.displayName}}
+         <!-- &nbsp;➡&nbsp; {{basicExampleName(delimiterOption.key)}} -->
+      </option>
+    </select>
+  </div>
+  <app-badge-parser-key
+    [nbPopover]="parserKeyPopover"
+    nbPopoverTrigger="hover"
+    nbPopoverPlacement="left"
+    [parserKey]="parserKey"
+    >
+  </app-badge-parser-key>
+  <ng-template #parserKeyPopover>
+    <div class="info-popover">
+      <div>
+      This indicates to Xyla how to tag your {{ entityLevel | entityDisplayName:channel:'plural'}}.<br>
+      It must be included at the {{ parserKeyPatternPosition === PatternPosition.Prefix ? 'beginning' : 'end' }} of each {{ entityLevel | entityDisplayName:channel }} name<br>
+      that uses this naming convention.
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<div class="parse-entity-sample">
+  <label>Enter or paste sample {{entityDisplayName}} name:</label>
+  <input class="entity-sample show-border" [placeholder]="longExampleName(selectedDelimiter)"
+    [disabled]="isParsingSample"
+    [value]="entitySample"
+    (change)="onEntitySampleChange($event)"
+    (keyup)="onEntitySampleChange($event)"
+    >
+  <div class="button-row">
+    <button class="secondary" *ngIf="!isParsingSample && !manualDefinitionMode; else empty" (click)="onClickSkipParsingSample($event)">
+      {{sampleEntityValues ? 'Clear Results' : 'Skip and define manually'}}
+    </button>
+    <ng-template #empty><div></div></ng-template>
+    <button *ngIf="entitySample" class="primary" [nbSpinner]="isParsingSample" nbSpinnerSize="tiny" (click)="onClickParseSample($event)">Parse Sample {{entityDisplayName}}</button>
+  </div>
+</div>
+
+<ng-container *ngIf="categoryNames && categoryNames.length">
+  <label class="tag-instructions" *ngIf="!manualDefinitionMode">Tag each value with a category:</label>
+  <label class="tag-instructions" *ngIf="manualDefinitionMode">Define each tag field in the desired order:</label>
+
+  <div class="parser-field-grid">
+    <div class="parser-field-header">
+      <div></div>
+      <div class="parser-field-category"><strong>Tag</strong> (category)</div>
+      <div class="parser-field-value" *ngIf="!manualDefinitionMode"><strong>Value</strong></div>
+    </div>
+    <div *ngFor="let value of (sampleEntityValues || categoryNames); index as i"
+      class="parser-field-row"
+      [class.manual]="manualDefinitionMode"
+      [class.key]="i === parserKeyIndex"
+      >
+      <div class="field-number">{{i + 1}}</div>
+      <div class="parser-field-category">
+        <input *ngIf="i !== parserKeyIndex; else parserKeyCategory"
+          placeholder="Skip this field"
+          [value]="categoryNames[i]"
+          (keyup)="onCategoryChange($event, i)"
+          (change)="onCategoryChange($event, i)"
+          >
+        <ng-template #parserKeyCategory>
+          <span class="parser-key-category">Convention ID</span>
+        </ng-template>
+      </div>
+      <div class="parser-field-value">
+        <span *ngIf="!manualDefinitionMode || i === parserKeyIndex" [class.empty]="!value">{{value ? value : 'empty' }}</span>
+      </div>
+      <div class="add-remove" *ngIf="manualDefinitionMode && i !== parserKeyIndex">
+        <app-button-circular *ngIf="allowDeleteField(i)"
+          class="circular-button delete"
+          [class.glowing]="true"
+          (click)="onDeleteFieldClick(i)"
+          tooltip="Delete this field"
+          color="red"
+          icon="times"
+          >
+        </app-button-circular>
+        <app-button-circular *ngIf="allowAddField(i)"
+          class="circular-button add"
+          [class.glowing]="true"
+          (click)="onAddFieldClick(i)"
+          tooltip="Add another field"
+          color="green"
+          icon="plus"
+          >
+        </app-button-circular>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="sample-output" *ngIf="manualDefinitionMode && categoryNames && categoryNames | sequenceParserPattern:selectedDelimiter as pattern">
+  <label>Name Pattern:</label>
+  <textarea readonly
+    [nbTooltip]="copyPatternTooltip"
+    [nbTooltipStatus]="copyPatternTooltip === CopyPatternTooltipText.Done ? 'basic' : ''"
+    (click)="onClickCopyPattern($event)"
+    >{{ pattern }}</textarea>
+</div>

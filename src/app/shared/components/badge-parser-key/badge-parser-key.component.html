@@ -1,0 +1,12 @@
+<div *ngIf="viewMode === ViewMode.Full; else badge"
+  class="parser-key-container"
+  >
+  <div class="parser-key-header">Convention ID
+    <nb-icon *ngIf="showInfoIcon" icon="info-outline" status="basic"></nb-icon>
+  </div>
+  <ng-container *ngTemplateOutlet="badge"></ng-container>
+</div>
+
+<ng-template #badge>
+  <div [class]="['parser-key-value', viewMode].join(' ')" >{{ parserKey }}</div>
+</ng-template>

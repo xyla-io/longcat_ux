@@ -1,0 +1,20 @@
+#container {
+  margin: 10px 40px;
+}
+
+.scrollable-table-container {
+  border-left: 1px solid rgba(34,36,38,.15);
+  border-right: 1px solid rgba(34,36,38,.15);
+}
+
+.ui.secondary.pointing.menu a {
+  color: grey;
+}
+
+.ui.secondary.pointing.menu a.active {
+  color: black;
+}
+
+.ui.secondary.pointing.menu a:not(.active):hover {
+  color: black;
+}

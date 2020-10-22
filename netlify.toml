@@ -1,0 +1,17 @@
+[context.company-master]
+  command = 'ng build -c production-company'
+
+[context.agency-master]
+  command = 'ng build -c production-agency'
+
+[context.company-staging]
+  command = 'ng build -c staging-company'
+
+[context.agency-staging]
+  command = 'ng build -c staging-agency'
+
+[context.alpha]
+  command = 'ng build -c staging-agency'
+
+[context.branch-deploy]
+  command = 'No build necessary for redirect site.'

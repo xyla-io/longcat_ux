@@ -1,0 +1,8 @@
+<div class="report">
+  <iframe appIframeTracker
+    *ngIf="element && element.embed.signedURL"
+    [src]="element.embed.signedURL | bypassSecurityURL" frameborder="0"
+    (iframeClick)="clickIframe()">
+  </iframe>
+</div>
+

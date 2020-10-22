@@ -1,0 +1,54 @@
+@import 'forms';
+#signupForm {
+  position: relative;
+}
+
+#passwordRules {
+  width: 140px;
+  position: absolute;
+  left: 100%;
+  top: 142px;
+  border: 1px solid #ced4da;
+  color: #6c757d;
+  font-size: 10px;
+  border-radius: .25rem;
+  padding: 10px;
+  margin: 0;
+}
+
+#passwordRules ul {
+  margin-bottom: 0;
+  padding-left: 14px;
+}
+
+
+#passwordRules p {
+  margin-bottom: 0.5rem;
+}
+
+.fa-ul {
+  margin-left: 0;
+}
+
+#passwordRules .fa-circle {
+  margin-top: 4px;
+  font-size: 0.5em;
+  vertical-align: 55%;
+}
+
+#passwordRules .fa-check {
+  color: green;
+}
+
+#passwordsMatch {
+  position: absolute;
+  left: 88%;
+  top: 234px;
+  color: green;
+  font-size: 1.0em;
+  z-index: 5;
+}
+
+#emailInvitationLabel {
+  top: 155px;
+}

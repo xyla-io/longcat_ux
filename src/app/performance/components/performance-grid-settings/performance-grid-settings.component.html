@@ -1,0 +1,23 @@
+<div class="liner">
+  <div class="section" *ngIf="ready">
+    <div class="label">Groups</div>
+    <app-option-ordered-multi-select
+      *ngIf="categoryOptions"
+      [selections]="categorySelections"
+      icon="tags"
+      [options]="categoryOptions"
+      placeholder="Select categories to compare"
+      (selectionChange)="onSelectCategoryChange($event)"
+      >
+    </app-option-ordered-multi-select>
+  </div>
+
+  <app-performance-node-settings
+    [kpiOptions]="kpiOptions"
+    [kpiModel]="kpiModel"
+    [daterange]="daterange"
+    (kpiChange)="onKPIChange($event)"
+    (daterangeChange)="onDaterangeChange($event)"
+    >
+  </app-performance-node-settings>
+</div>

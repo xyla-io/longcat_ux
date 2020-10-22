@@ -1,0 +1,15 @@
+<div *ngFor="let userAlert of activeAlerts"
+  [class]="['ui message', userAlert.alertType].join(' ')"
+  [class.icon]="userAlert.icon"
+  >
+  <i *ngIf="userAlert.icon" [class]="[userAlert.icon ,'icon'].join(' ')"></i>
+  <i class="close icon"
+     (click)="clickClose(userAlert)"
+    ></i>
+  <div class="content">
+    <div class="header">
+      {{ userAlert.header }}
+    </div>
+      {{ userAlert.body }}
+  </div>
+</div>

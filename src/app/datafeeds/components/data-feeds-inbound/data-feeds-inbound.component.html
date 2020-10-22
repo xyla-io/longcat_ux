@@ -1,0 +1,128 @@
+<div *ngIf="!isLoading && dataFeedTables.length"
+  class="ui placeholder segment">
+  <div class="ui header">
+    <i class="grey truck icon"></i>
+    <div class="content">Custom Integrations</div>
+  </div>
+  <table class="ui table">
+    <thead>
+      <tr>
+        <ng-container *ngIf="dataFeedTables.length">
+          <th class="one wide"></th>
+          <th class="three wide">Name</th>
+          <th class="five wide">Description</th>
+          <th class="five wide">Last Update</th>
+          <th class=""></th>
+          <th class="right aligned">
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="!dataFeedTables.length" height="200px">
+        <td style="text-align: center; border-top: 1px solid #dee2e6; !important">
+          <span *ngIf="!isLoading">No Custom Integrations</span>
+        </td>
+      </tr>
+      <tr *ngFor="let dataLot of dataFeedTables; index as i">
+        <td class="middle aligned">
+          <i class="truck icon logo-icon"></i>
+        </td>
+        <td class="middle aligned">{{ dataLot.displayName }}</td>
+        <td class="middle aligned">{{ dataLot.description }}</td>
+        <td class="middle aligned">
+          <i class="green check icon status-icon"></i>
+          {{ dataLot.displayModificationTime }}
+        </td>
+        <td class="middle center aligned">
+        </td>
+        <td class="button-cell-padding middle right aligned">
+          <div class="cell-multi-item">
+            <app-file-upload
+              [tooltip]="'Upload CSV'"
+              [header]="'Upload CSV'"
+              [isWaiting]="uploadWaitingSet.has(i)"
+              (fileInputEvent)="handleFileInputEvent($event, dataLot, i)"
+              [uploadOptions]="[
+                {
+                  actionKey: 'append',
+                  buttonText: 'Append Rows',
+                  tooltip: 'Add all rows from a CSV file to \'' + dataLot.displayName + '\'',
+                  iconTag: 'blue pencil'
+                }, {
+                  actionKey: 'replace',
+                  buttonText: 'Replace All',
+                  tooltip: 'Erase all data from \'' + dataLot.displayName + '\' and replace with a new CSV file' ,
+                  confirmationPrompt: 'Are you sure you want to delete and replace all data in the \'' + dataLot.displayName + '\' Data Lot?\n\nIf you are sure, select OK:',
+                  iconTag: 'red eraser'
+                }
+              ]"
+              >
+            </app-file-upload>
+          </div>
+          <div class="cell-multi-item">
+            <app-raw-export
+              [urlProvider]="this"
+              [resourceKey]="dataLot.path"
+              viewType="dropdown"
+              suiPopup
+              popupText="Download CSV"
+              popupInverted 
+              popupPlacement="top"
+              >
+            </app-raw-export>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="ui placeholder segment">
+  <div class="ui header">
+    <i class="grey plug icon"></i>
+    <div class="content">Core Integrations</div>
+  </div>
+  <table class="ui table">
+    <thead>
+      <tr>
+        <ng-container *ngIf="coreChannels.length">
+          <th class="one wide"></th>
+          <th class="eight wide">Name</th>
+          <th class="six wide">Last Update</th>
+          <th class="one wide">
+            <div
+              suiDropdown
+              class="ui icon top right tiny pointing dropdown basic button"
+              >
+              <i class="grey large clock outline icon"></i>
+              <div suiDropdownMenu class="menu">
+                <div class="disabled item">{{ fetchTimesDisplay }}</div>
+              </div>
+            </div>
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="!coreChannels.length" height="200px">
+        <td style="text-align: center; border-top: 1px solid #dee2e6; !important">
+          <span *ngIf="!isLoading">No Core Integrations</span>
+        </td>
+      </tr>
+      <tr *ngFor="let channel of coreChannels; index as i">
+        <td class="middle aligned col-view-icon">
+          <img [src]="channel.icon"/>
+        </td>
+        <td class="middle aligned">{{ channel.displayName }}</td>
+        <td class="middle aligned">
+          <i *ngIf="channel.displayUpdateTime"
+            class="green check icon status-icon"></i>
+          {{ channel.displayUpdateTime }}
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

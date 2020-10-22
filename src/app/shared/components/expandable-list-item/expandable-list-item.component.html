@@ -1,0 +1,41 @@
+<ng-container *ngIf="item">
+  <div class="heading"
+    [class.heading--expandable]="item.expandable && hasIndex"
+    (click)="onClickExpandItem($event)"
+    >
+    <div
+      class="heading__title"
+      [class.heading__title--placeholder]="!hasIndex"
+      >
+      {{ displayTitle }}
+      <span *ngIf="item.expandable && hasIndex"
+        class="heading__expander"
+        [class.heading__expander--expanded]="expanded"
+        >
+        <nb-icon icon="bar-chart-2">
+        </nb-icon>
+      </span>
+      <span *ngIf="item.badge"
+        class="heading__badge"
+        >
+        {{ item.badge }}
+      </span>
+    </div>
+    <button *ngIf="hasIndex"
+      nbButton
+      ghost
+      outline
+      size="small"
+      class="heading__remove"
+      [nbTooltip]="'Remove this ' + item.itemType"
+      (click)="onClickRemoveItem($event)"
+      >
+      <nb-icon icon="trash-outline"></nb-icon>
+    </button>
+  </div>
+  <div *ngIf="item.expandable && hasIndex && expanded"
+    class="body">
+    <ng-content select="[expandable-content]">
+    </ng-content>
+  </div>
+</ng-container>

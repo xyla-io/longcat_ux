@@ -1,0 +1,12 @@
+<div id="container">
+  <div [ngSwitch]="entity.name">
+    <app-list-campaigns *ngSwitchCase="'campaign'"
+     [entity]="entity"
+     [entityObservable]="entityObservable">
+    </app-list-campaigns>
+    <app-list-ads *ngSwitchCase="'ad'"
+     [entity]="entity"
+     [entityObservable]="entityObservable">
+    </app-list-ads>
+  </div>
+</div>

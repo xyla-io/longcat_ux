@@ -1,0 +1,156 @@
+<div #wrapper class="wrapper" [class.isDirty]="isDirty" [class.visible]="visible">
+  <div class="liner" *ngIf="editedRule; else loading">
+    <div class="layout">
+      <div class="settings-column">
+        <div class="task-set-type-setting raised-container">
+          <app-option-single-select
+            [options]="TaskOps.taskSetTypeOptions"
+            [selection]="TaskOps.getTaskSetType(editedRule.tasks)"
+            label="rule type"
+            (selectionChange)="onSelectTaskSetTypeChange($event)"
+            >
+          </app-option-single-select>
+        </div>
+        <div class="boolean-settings">
+          <app-option-multi-select
+            placeholder="options"
+            [model]="editedRule"
+            [options]="RuleOps.booleanRuleOptions"
+            (selectionChange)="onBooleanSelectionChange($event)"
+            >
+          </app-option-multi-select>
+        </div>
+        <div class="enabled-setting raised-container">
+          <label>off</label>
+          <app-option-toggle
+            [option]="editedRule.isEnabled"
+            [color]="!editedRule.shouldPerformAction ? 'orange' : ''"
+            [knobColor]="!editedRule.modified ? 'yellow' : ''"
+            (toggleChange)="onEnabledToggleChange($event)"
+            >
+          </app-option-toggle>
+          <label>on</label>
+        </div>
+      </div>
+
+      <div class="tasks"
+        [class.dirty]="isDirty"
+        >
+        <div class="time-settings">
+          <app-edit-run-interval
+            [runInterval]="editedRule.runInterval"
+            [channel]="editedRule.channel"
+            (selectChange)="onSelectRunIntervalChange($event)"
+            >
+          </app-edit-run-interval>
+          <app-edit-check-range
+            [checkRange]="editedRule.dataCheckRange"
+            [channel]="editedRule.channel"
+            (selectChange)="onSelectCheckRangeChange($event)"
+            >
+          </app-edit-check-range>
+        </div>
+
+        <div *ngFor="let task of displayableTasks; index as i"
+          class="task"
+          >
+          <app-edit-task
+            [glowing]="glowing"
+            [task]="task"
+            [channel]="editedRule.channel"
+            [taskSetType]="TaskOps.getTaskSetType(editedRule.tasks)"
+            (actionChange)="onTaskActionChange($event, i)"
+            (adjustmentValueChange)="onTaskAdjustmentValueChange($event, i)"
+            (adjustmentLimitChange)="onTaskAdjustmentLimitChange($event, i)"
+            (groupOperatorChange)="onTaskConditionGroupOperatorChange($event, i)"
+            (metricChange)="onTaskConditionMetricChange($event, i)"
+            (conditionOperatorChange)="onTaskConditionOperatorChange($event, i)"
+            (metricValueChange)="onTaskConditionMetricValueChange($event, i)"
+            (addCondition)="onTaskAddCondition($event, i)"
+            (deleteCondition)="onTaskDeleteCondition($event, i)"
+            >
+          </app-edit-task>
+        </div>
+
+        <div class="confirmation-area">
+          <div class="confirmation-buttons" *ngIf="isDirty">
+            <button class="subtle cancel" (click)="onClickCancel($event)">Cancel</button>
+            <button class="subtle confirm" [class.loading]="isSaving" (click)="onClickSave($event)">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="editedRule.modified"
+        class="rule-history"
+        >
+        <app-list-rule-history
+          [rule]="rule"
+          >
+        </app-list-rule-history>
+      </div>
+    </div>
+  </div>
+  <app-toast [toasts$]="toasts$">
+  </app-toast>
+  <div *ngIf="showingActionButtons">
+    <div class="action-button delete"
+      suiPopup
+      popupText="Delete this rule"
+      popupPlacement="right"
+      popupBasic
+      popupInverted
+      popupTransition="fade"
+      (click)="onClickDelete($event)"
+      >
+      <i class="icon trash"></i>
+    </div>
+    <div class="action-button clone"
+      *ngIf="!isDirty"
+      suiPopup
+      popupText="Clone this rule"
+      popupPlacement="right"
+      popupBasic
+      popupInverted
+      popupTransition="fade"
+      (click)="onClickClone($event)"
+      >
+      <i class="icon clone"></i>
+    </div>
+    <div *ngIf="!editedRule.modified" class="new-rule-badge raised-container">
+      <i class="ui certificate icon"></i>
+      New
+    </div>
+  </div>
+
+  <ng-template #loading>
+      Loading rule...
+  </ng-template>
+</div>
+
+<ngx-smart-modal *ngIf="editedRule" #confirmDeleteModal [identifier]="'confirmDeleteModal-' + editedRule._id">
+  <div class="confirmation-modal">
+    <h1>Delete Rule</h1>
+    <p>This can't be undone</p>
+    <div class="buttons">
+      <button class="ui button"
+        (click)="confirmDeleteModal.close()"
+        >
+        Keep Rule
+      </button>
+      <button class="ui danger button"
+        (click)="onClickDeleteConfirm($event)"
+        >
+        Delete Rule
+      </button>
+    </div>
+  </div>
+</ngx-smart-modal>
+
+<ngx-smart-modal *ngIf="editedRule" #cloneModal [identifier]="'cloneModal-' + editedRule._id">
+  <app-clone-rule
+    [initialCloneInfo]="{ accountPath: editedRule.account, campaignID: editedRule.campaignID, adgroupID: editedRule.adgroupID }"
+    (cancel)="cloneModal.close()"
+    (clone)="onClickCloneConfirm($event)"
+    >
+  </app-clone-rule>
+</ngx-smart-modal>

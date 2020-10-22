@@ -1,0 +1,10 @@
+<label>look back</label>
+<select [value]="checkRange"
+  (change)="onChange($event)"
+  >
+  <option *ngFor="let value of Options.keys(RuleOps.dataCheckRangeOptions, { channel: channel })"
+    [value]="value"
+    >
+    {{ RuleOps.dataCheckRangeOptions[value].displayName }}
+  </option>
+</select>

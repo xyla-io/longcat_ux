@@ -1,0 +1,48 @@
+@import 'style-guide';
+
+.header {
+  text-align: center;;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  .select-entity {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+    align-items: center;
+    label {
+      display: block;
+    }
+    .entity-select {
+      position: relative;
+      left: -12px;
+    }
+  }
+}
+
+.parser-key-settings {
+  display: flex;
+  flex-direction: column;
+  select {
+    margin: 0 auto;
+    margin-top: 4px;
+  }
+}
+
+.info-popover {
+  display: flex;
+  flex-direction: column;
+  .custom-parser-key {
+    margin-top: 12px;
+    text-align: left;
+    padding: 6px;
+  }
+  .custom-parser-key-error {
+    font-size: 0.8rem;
+    padding: 10px;
+    color: $color-primary-700;
+    text-align: center;
+  }
+}

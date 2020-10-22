@@ -1,0 +1,32 @@
+<div class="menu ui pointing">
+  <a 
+    *ngFor="let filter of filters"
+    [class.active]="activePresetKey===filter.key"
+    class="item"
+    (click)="onPresetClicked(filter)"
+    >
+    {{ filter.displayName }}
+    <div class="ui circular label"
+      [class.red]="filter.key==='untagged'"
+      >
+      <i 
+        *ngIf="showLoading"
+        class="fitted loading spinner icon"></i>
+      <ng-container *ngIf="!showLoading">
+        {{ getPresetRowCount(filter.key) }}
+      </ng-container>
+    </div>
+  </a>
+  <div class="right menu">
+    <div *ngIf="_showFilterInput" class="item">
+      <div class="ui transparent icon input">
+        <input type="text"
+        placeholder="Filter..."
+        (keyup)="customFilterTextChanged($event)"
+        [value]="filterInputText"
+        >
+        <i class="search link icon"></i>
+      </div>
+    </div>
+  </div>
+</div>

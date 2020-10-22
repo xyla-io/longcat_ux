@@ -1,0 +1,31 @@
+<ng-container *ngIf="!selectedDisplayBreakdownIdentifiers.length; else listBreakdownsTemplate">
+  <ng-container *ngTemplateOutlet="breakdownTemplate">
+  </ng-container>
+</ng-container>
+
+<ng-template #listBreakdownsTemplate>
+  <ng-container *ngFor="let identifier of selectedDisplayBreakdownIdentifiers; index as i">
+    <ng-container *ngTemplateOutlet="breakdownTemplate; context: {identifier: identifier, index: i}">
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #breakdownTemplate let-identifier="identifier" let-index="index">
+  <app-expandable-list-item
+    (clickRemove)="onClickRemoveDimension($event)"
+    [item]="{
+      itemType: 'dimension',
+      index: index,
+      displayTitle: (templateBreakdownMap.get(identifier) || {}).displayName
+    }"
+    >
+  </app-expandable-list-item>
+</ng-template>
+
+<div class="bank">
+  <app-button-bank
+    [buttons]="bankedButtons"
+    (buttonClick)="onBankedButtonClick($event)"
+    >
+  </app-button-bank>
+</div>

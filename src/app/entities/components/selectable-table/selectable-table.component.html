@@ -1,0 +1,345 @@
+<app-filter-entities
+  [provider]="filterDataProvider"
+  [rowProvider]="this"
+  [applyActiveFilterEvent]="applyFilterEventEmitter"
+  [changeActiveFilterEvent]="changeFilterEventEmitter"
+  [showFilterInput]="!isFilteredBySelection"
+  [showLoading]="isRefreshing || isLoadingEntities"
+  (filterRowsEvent)="filterRowsEventHandler($event)"
+  ></app-filter-entities>
+
+<div #fixedHeightContainer id="fixedHeightContainer">
+<div
+   #tableContainer
+   class="scrollable-table-container">
+  <table class="ui sortable very compact small table">
+    <thead>
+      <tr *ngIf="isLoadingEntities" #headerRow>
+        <th class="sixteen wide" height="44px"></th>
+      </tr>
+      <tr *ngIf="!isLoadingEntities" #headerRow>
+        <th *ngFor="let template of columnTemplates; index as i"
+          [class]="['head-'+template.name, template.view.width, 'wide'].join(' ')"
+          (click)="clickHeaderCell(i)"
+          [class.sorted]="sortedColumnIndex===i"
+          [class.descending]="sortedColumnIndex===i && sortReverse"
+          [class.ascending]="sortedColumnIndex===i && !sortReverse"
+          >
+          {{ template.header }}
+        </th>
+        <th class="one wide" style="position:relative;"
+          (click)="clickMasterSelect()"
+          >
+          <i class="col-view-checkbox large red icon square"
+            style="margin-left:-1px;"
+            [class.outline]="selectionState===SelectionState.NONE"
+            [class.check]="selectionState===SelectionState.ALL"
+            [class.minus]="selectionState===SelectionState.SOME"
+          ></i>
+        </th>
+      </tr>
+    </thead>
+    <tbody #tableBody>
+      <ng-container *ngIf="isLoadingEntities">
+        <tr id="loaderRow" class="middle center aligned">
+          <td class="sixteen wide">
+            <app-loader size="50"></app-loader>
+          </td>
+        </tr>
+      </ng-container>
+      <tr *ngFor="let row of visibleRows; index as i"
+        (click)="clickTableRow(i)"
+        [class.row-selected]="row.isSelected"
+        [class.row-unselected]="!row.isSelected"
+        >
+        <ng-container *ngFor="let col of columnTemplates; index as j">
+          <ng-container [ngSwitch]="col.view.type">
+            <td *ngSwitchCase="'icon'"
+              style="margin-left:16px;"
+              [class]="['col-view-icon raise-tooltip', col.view.width, 'wide'].join(' ')"
+              [attr.data-tooltip]="row.values[col.data_columns[0]]"
+              data-inverted=""
+              data-position="top left">
+              <img [src]="col.view.converter(row.values[col.data_columns[0]])">
+            </td>
+            <td *ngSwitchCase="'text'"
+              [class]="['col-view-text', col.view.width, 'wide'].join(' ')">
+              <div>{{ row.values[col.data_columns[0]] }}</div>
+            </td>
+            <td *ngSwitchCase="'subscript'"
+              [class]="['col-view-subscript'].join(' ')">
+              <div>{{ row.values[col.data_columns[0]] }}</div>
+              <div>{{ row.values[col.data_columns[1]] }}</div>
+            </td>
+            <td *ngSwitchCase="'tag'"
+              [class]="['col-view-tag', col.view.width, 'wide'].join(' ')">
+              <div [class.tagged]="row.values[col.data_columns[0]]">
+                {{ row.values[col.data_columns[0]] }}
+              </div>
+            </td>
+          </ng-container>
+        </ng-container>
+        <td class="one wide">
+          <i class="col-view-checkbox large icon square"
+            [class.outline]="!row.isSelected"
+            [class.grey]="!row.isSelected"
+            [class.check]="row.isSelected"
+            [class.red]="row.isSelected"
+            ></i>
+        </td>
+      </tr>
+      <tr>
+        <td #paddingCell 
+          id="paddingCell"
+          height="0"
+          style="padding:0px;"
+          [class.content-loaded]="!isLoadingEntities"
+          [attr.colspan]="columnTemplates.length + 1"
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<table class="ui table">
+  <tfoot #footerRow style="width:100%;">
+    <tr>
+      <th [attr.colspan]="columnTemplates.length + 1">
+
+        <div class="ui left floated icon labeled button"
+          (click)="clickFilterSelected()"
+          [class.basic]="!isFilteredBySelection"
+          [class.active]="isFilteredBySelection"
+          [class.red]="isFilteredBySelection"
+          >
+          <i class="filter icon"></i> 
+          <div id="currentSelectionButton">
+            Current Selection
+            <div class="ui floating circular label">{{ rowSelectionCount }}</div>
+          </div>
+        </div>
+        <div
+          class="ui floating right floated bottom pointing dropdown right icon basic button"
+          id="bulkTaggingButton"
+          suiDropdown
+          [ngClass]="{'loading disabled': actionStates.fileTransfer.isUploading || actionStates.fileTransfer.isDownloading }"
+          [isOpen]="actionStates.fileTransfer.isOpen"
+          (isOpenChange)="fileTransferDropdownOpenChange($event)"
+          >
+          <i class="excel file icon"></i>
+          <div class="menu"
+            suiDropdownMenu
+            menuTransition="slide up">
+            <div class="header">
+              <i class="tags icon"></i>&nbsp;&nbsp;Bulk Tagging
+            </div>
+            <sui-select [(ngModel)]="bulkTaggingType">
+              <sui-select-option value="Campaign"></sui-select-option>
+              <sui-select-option value="Ad Set"></sui-select-option>
+              <sui-select-option value="Ad"></sui-select-option>
+            </sui-select>
+            <div class="divider"></div>
+            <app-file-upload
+              [tooltip]="'Upload Bulk CSV ' + bulkTaggingType + ' Tags'"
+              iconTag="upload"
+              [isWaiting]="actionStates.fileTransfer.isUploading"
+              (fileInputEvent)="handleFileInputEvent($event)"
+              >
+            </app-file-upload>
+            <app-raw-export
+              class="primary-action"
+              [urlProvider]="this"
+              [resourceKey]="selectedBulkTaggingEntity()"
+              viewType="dropdown"
+              pointing="right"
+              [xOffset]="155"
+              (isLoadingEvent)="onCSVDownloadLoadingChange($event)"
+              >
+            </app-raw-export>
+          </div>
+        </div>
+
+
+        <div class="ui floating right floated bottom pointing dropdown right icon basic labeled button"
+          suiDropdown
+          [autoClose]="actionStates.untag.isApplyingChanges?'disabled':'outsideClick'"
+          [isOpen]="actionStates.untag.isOpen"
+          (isOpenChange)="untagDropdownOpenChange($event)"
+          >
+          <i class="remove icon"></i> Untag
+          <div class="menu"
+            suiDropdownMenu menuTransition="slide up">
+            <p class="dropdown-message"> Remove all tags and subtags<br>from selected rows? </p>
+            <div
+              class="action-button ui icon compact right labeled button"
+              [class.loading]="actionStates.untag.isApplyingChanges"
+              (click)="clickUntag($event)"
+              [class.disabled]="rowSelectionCount < 1"
+              [class.basic]="actionStates.untag.didApplyChanges"
+              [class.green]="actionStates.untag.didApplyChanges"
+              [class.red]="!actionStates.untag.didApplyChanges"
+              >
+              <span *ngIf="actionStates.untag.didApplyChanges; else untagButtonText">
+                Rows Updated
+              </span>
+              <ng-template #untagButtonText>
+                <span *ngIf="rowSelectionCount < 1">
+                  No Rows Selected
+                </span>
+                <span *ngIf="rowSelectionCount > 0">
+                  Untag {{rowSelectionCount}} Row<span *ngIf="rowSelectionCount > 1">s</span>
+                </span>
+              </ng-template>
+              <i class="icon"
+                [class.check]="actionStates.untag.didApplyChanges"
+                [class.circle]="actionStates.untag.didApplyChanges"
+                [class.exclamation]="!actionStates.untag.didApplyChanges && rowSelectionCount < 1"
+                [class.triangle]="!actionStates.untag.didApplyChanges && rowSelectionCount < 1"
+                [class.remove]="!actionStates.untag.didApplyChanges && rowSelectionCount > 0"
+                ></i>
+            </div>
+            <div class="divider"></div>
+          </div>
+        </div>
+
+        <div class="ui floating right floated bottom pointing dropdown middle icon basic labeled button"
+                (keyup)="$event.preventDefault()"
+                suiDropdown
+                  [autoClose]="actionStates.subtag.isApplyingChanges?'disabled':'outsideClick'"
+                  [isOpen]="actionStates.subtag.isOpen"
+                  (isOpenChange)="subtagDropdownOpenChange($event)"
+                >
+          <i class="red tags icon"></i> Subtag
+          <div class="menu" 
+            suiDropdownMenu menuTransition="slide up">
+            <div class="header">
+              <i class="tags icon"></i>&nbsp;&nbsp;Previously Used Subtags
+            </div>
+            <div class="scrolling menu">
+              <div *ngFor="let subtag of filteredSubtags"
+                class="item submenu-wraparound-item"
+                (click)="selectPreviousSubtag(subtag)"
+                >
+                <div class="ui empty circular label"
+                  [class.green]="subtagInputValue===subtag"
+                  [class.grey]="subtagInputValue!==subtag"
+                  ></div> {{ subtag }}
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="ui icon input">
+              <i class="tag icon"></i>
+              <input type="text"
+                (keyup)="inputSubtagTextChanged($event)"
+                placeholder="Search/Add Subtag..."
+                [value]="subtagInputValue"
+                >
+            </div>
+            <div
+              class="action-button ui icon compact right labeled button"
+              [class.loading]="actionStates.subtag.isApplyingChanges"
+              (click)="clickApplySubtag($event)"
+              [class.disabled]="rowSelectionCount < 1 || subtagInputValue.trim() === ''"
+              [class.basic]="actionStates.subtag.didApplyChanges"
+              [class.green]="actionStates.subtag.didApplyChanges"
+              [class.red]="!actionStates.subtag.didApplyChanges"
+              >
+              <span *ngIf="actionStates.subtag.didApplyChanges; else subtagButtonText">
+                Rows Updated
+              </span>
+              <ng-template #subtagButtonText>
+                <span *ngIf="rowSelectionCount < 1">
+                  No Rows Selected
+                </span>
+                <span *ngIf="rowSelectionCount > 0">
+                  Apply to {{rowSelectionCount}} Row<span *ngIf="rowSelectionCount > 1">s</span>
+                </span>
+              </ng-template>
+              <i class="icon"
+                [class.check]="actionStates.subtag.didApplyChanges"
+                [class.circle]="actionStates.subtag.didApplyChanges"
+                [class.exclamation]="!actionStates.subtag.didApplyChanges && rowSelectionCount < 1"
+                [class.triangle]="!actionStates.subtag.didApplyChanges && rowSelectionCount < 1"
+                [class.plus]="!actionStates.subtag.didApplyChanges && rowSelectionCount > 0"
+                ></i>
+            </div>
+            <div class="divider"></div>
+
+          </div>
+        </div>
+
+        <div class="ui floating right floated bottom pointing dropdown left icon basic labeled button" 
+          (keyup)="$event.preventDefault()"
+          suiDropdown
+          [autoClose]="actionStates.tag.isApplyingChanges?'disabled':'outsideClick'"
+          [isOpen]="actionStates.tag.isOpen"
+          (isOpenChange)="tagDropdownOpenChange($event)"
+          >
+          <i class="red tag icon"></i> Tag
+          <div class="menu" 
+            suiDropdownMenu menuTransition="slide up">
+            <div class="header">
+              <i class="tags icon"></i>&nbsp;&nbsp;Previously Used Tags
+            </div>
+            <div class="scrolling menu">
+              <div *ngFor="let tag of filteredTags"
+                class="item submenu-wraparound-item"
+                (click)="selectPreviousTag(tag)">
+                <div class="ui empty circular label"
+                  [class.green]="tagInputValue===tag"
+                  [class.grey]="tagInputValue!==tag"
+                  >
+                </div>
+                {{ tag }}
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="ui icon input">
+              <i class="tag icon"></i>
+              <input type="text"
+                (keyup)="inputTagTextChanged($event)"
+                placeholder="Search/Add Tag..."
+                [value]="tagInputValue"
+                >
+            </div>
+            <div
+              class="action-button ui icon compact right labeled button"
+              [class.loading]="actionStates.tag.isApplyingChanges"
+              (click)="clickApplyTag($event)"
+              [class.disabled]="rowSelectionCount < 1 || tagInputValue.trim() === ''"
+              [class.basic]="actionStates.tag.didApplyChanges"
+              [class.green]="actionStates.tag.didApplyChanges"
+              [class.red]="!actionStates.tag.didApplyChanges"
+              >
+              <span *ngIf="actionStates.tag.didApplyChanges; else tagButtonText">
+                Rows Updated
+              </span>
+              <ng-template #tagButtonText>
+                <span *ngIf="rowSelectionCount < 1">
+                  No Rows Selected
+                </span>
+                <span *ngIf="rowSelectionCount > 0">
+                  Apply to {{rowSelectionCount}} Row<span *ngIf="rowSelectionCount > 1">s</span>
+                </span>
+              </ng-template>
+              <i class="icon"
+                [class.check]="actionStates.tag.didApplyChanges"
+                [class.circle]="actionStates.tag.didApplyChanges"
+                [class.exclamation]="!actionStates.tag.didApplyChanges && rowSelectionCount < 1"
+                [class.triangle]="!actionStates.tag.didApplyChanges && rowSelectionCount < 1"
+                [class.plus]="!actionStates.tag.didApplyChanges && rowSelectionCount > 0"
+                ></i>
+            </div>
+            <div class="divider"></div>
+          </div>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+

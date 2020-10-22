@@ -1,0 +1,59 @@
+<select
+  (change)="onTimelineSelectChange($event)"
+  [(value)]="selectedTimelineOption.slug"
+  >
+  <option *ngFor="let option of timelineOptions"
+    [value]="option.slug"
+    >
+    {{ option.displayName }}
+  </option>
+</select>
+
+<div *ngIf="selectedTimelineOption.slug==='daterange'"
+  class="range-selection"
+  (click)="onToggleRangeSelectionClick($event)"
+  >
+  <span class="range-selection__label">
+    from
+  </span>
+  <span class="range-selection__value">
+    <ng-container *ngTemplateOutlet="dateTemplate; context: {
+        date: selectedTimelineOption.value.start
+      }">
+    </ng-container>
+  </span>
+  <span class="range-selection__label">
+    until
+  </span>
+  <span *ngIf="selectedTimelineOption.value.end"
+    class="range-selection__value"
+    >
+    <ng-container *ngTemplateOutlet="dateTemplate; context: {
+        date: selectedTimelineOption.value.end
+      }">
+    </ng-container>
+  </span>
+  <span *ngIf="!selectedTimelineOption.value.end"
+    class="range-selection__value range-selection__value--undefined"
+    >
+    —
+  </span>
+  <span class="range-selection__icon">
+    <nb-icon icon="calendar-outline">
+    </nb-icon>
+  </span>
+</div>
+
+<ng-template #dateTemplate let-date='date'>
+  {{ date | date:'d MMM y' }}
+</ng-template>
+
+<ng-container *ngIf="selectedTimelineOption.slug==='daterange' && calendarOpen">
+  <nb-calendar-range 
+    [max]="maxDate"
+    [showHeader]="false"
+    (rangeChange)="onCalendarRangeChange($event)"
+    [(range)]="daterangeOption.value"
+    >
+  </nb-calendar-range>
+</ng-container>

@@ -1,0 +1,20 @@
+<span class="entity-label">Campaign</span>
+<app-badge-category-counts
+  [bubbles]="bubbles"
+  [node]="node"
+  >
+</app-badge-category-counts>
+<span class="entity-name campaign">{{ campaignName }}</span>
+<app-button-circular
+  *ngIf="showAddNode && isHovering && ioMapService.entityReport"
+  icon="plus"
+  color="purple"
+  (click)="onClickAddNode($event)"
+  suiPopup
+  popupText="New Campaign Rule"
+  popupInverted
+  popupPlacement="right"
+  popupBasic
+  [popupDelay]="1000"
+  >
+</app-button-circular>

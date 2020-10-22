@@ -1,0 +1,17 @@
+<ng-container *ngIf="value === null; else valid">{{ displayNullAs }}</ng-container>
+<ng-template #valid>
+  <ng-container [ngSwitch]="format">
+    <ng-container *ngSwitchCase="DisplayFormat.None">
+      {{ value | datacell }}
+    </ng-container>
+    <ng-container *ngSwitchCase="DisplayFormat.Currency">
+      {{ value | currency }}
+    </ng-container>
+    <ng-container *ngSwitchCase="DisplayFormat.Percentage">
+      {{ value | percent }}
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      {{ value | datacell }}
+    </ng-container>
+  </ng-container>
+</ng-template>

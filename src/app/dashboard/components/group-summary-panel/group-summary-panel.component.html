@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="block">
+    <div class="block__heading">
+      <div class="block__title">
+        Summary
+      </div>
+      <div class="block__daterange">
+        <app-daterange-selector
+          [daterange]="(group.queryParameters || {}).interval"
+          (daterangeChange)="onDaterangeChange($event)"
+          >
+        </app-daterange-selector>
+      </div>
+    </div>
+    <div class="block__fixed" #groupSummaryFixedElement>
+      <div class="block__elements">
+        <ng-container *ngFor="let template of group.structure.templates; index as i">
+          <app-block-big-number
+            class="big-number"
+            [template]="template"
+            [dataRefreshing]="dataRefreshing"
+            >
+          </app-block-big-number>
+          <div *ngIf="i !== group.structure.templates.length - 1"
+            class="spacer"
+            >
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,19 @@
+<span class="entity-label">Ad Group</span>
+<app-badge-category-counts
+  [node]="node"
+  [bubbles]="bubbles"
+></app-badge-category-counts>
+<span class="entity-name adgroup">{{ adgroupName }}</span>
+<app-button-circular
+  *ngIf="showAddNode && isHovering && ioMapService.entityReport"
+  icon="plus"
+  color="purple"
+  (click)="onClickAddNode($event)"
+  suiPopup
+  popupText="New Ad Group Rule"
+  popupInverted
+  popupPlacement="right"
+  popupBasic
+  [popupDelay]="1000"
+  >
+</app-button-circular>

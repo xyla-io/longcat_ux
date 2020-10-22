@@ -1,0 +1,71 @@
+#container {
+  position: fixed;
+  margin-right: 14px;
+  margin-bottom: 48px;
+  bottom: 0;
+  right: 0;
+  max-height: 30%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#minimizeIcon {
+  float: left;
+}
+
+#minimizeIcon:hover {
+  cursor: pointer;
+  color: grey;
+}
+
+#maximizeIcon {
+  position: relative;
+  top: -8px;
+  right: 4px;
+}
+
+#maximizeIcon:hover {
+  cursor: pointer;
+  color: grey;
+}
+
+#minimizedSegment {
+  position: relative;
+  left: calc(100% - 30px);
+  bottom: -2px;
+  width: 10px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  background: var(--bglight);
+  box-shadow: none;
+  border-bottom: none;
+  cursor: pointer;
+}
+
+#minimizedSegment .download-info {
+  position: relative;
+  right: 10px;
+}
+
+#minimizedSegment .download-info i {
+  margin-bottom: 3px;
+}
+
+.ui.segment.download-segment {
+  padding-bottom: 6px;
+  padding-left: 8px;
+}
+
+.download-segment p{
+  margin: 0;
+}
+
+.download-segment p:nth-child(2) {
+  font-weight: bold;
+  color: var(--xylamediumgrey);
+  font-size: 0.8rem;
+}
+
+.ui.raised.segments {
+  padding-bottom: 5px;
+}

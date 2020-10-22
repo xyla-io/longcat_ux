@@ -1,0 +1,55 @@
+@import 'style-guide';
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  .fitted.checkbox {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
+$color-yellow: $color-warning-500;
+
+.boolean-toggle {
+  cursor: pointer;
+  $height: 20px;
+  width: 40px;
+  height: $height;
+  border-radius: calc(#{$height} / 2);
+  background-color: $emblem-color-basic;
+  &.on {
+    background-color: $color-info-muted;
+    &.orange {
+      background-color: $color-construction-500;
+      opacity: 75%;
+    }
+    &.yellow {
+      background-color: $color-yellow;
+      opacity: 75%;
+    }
+    .knob {
+      left: 24px;
+    }
+  }
+  .knob {
+    $size: 10px;
+    height: $size;
+    width: $size;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+    left: 6px;
+    top: calc(#{$size} / 2);
+    transition-property: left, background-color;
+    transition-duration: 0.5s;
+    &.yellow {
+      background-color: $color-yellow;
+      opacity: 75%;
+    }
+    &.orange {
+      background-color: $color-construction-500;
+      opacity: 75%;
+    }
+  }
+}

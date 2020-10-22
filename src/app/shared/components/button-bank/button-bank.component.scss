@@ -1,0 +1,27 @@
+@import 'style-guide';
+
+.bank {
+
+  .bank__button {
+    padding: 3px;
+    padding-right: 8px;
+    margin-top: 8px;
+    margin-right: 8px;
+    font-size: 14px;
+    font-weight: 600px;
+
+    &.bank__button[disabled] {
+      color: white;
+    }
+
+    .bank__button-icon {
+      color: $color-info-500;
+      margin-right: 2px;
+      height: 11px;
+
+      &.bank__button-icon--disabled {
+        color: white;
+      }
+    }
+  }
+}

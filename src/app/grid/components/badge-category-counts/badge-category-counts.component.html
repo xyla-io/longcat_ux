@@ -1,0 +1,23 @@
+<span
+  *ngIf="tooltip; else empty"
+  class="badge"
+  suiPopup
+  [popupText]="tooltip"
+  popupBasic
+  popupInverted
+  popupPlacement="right"
+  >
+  <span
+    *ngFor="let bubble of bubbles; index as i"
+    [class]="bubble.class"
+    [class.none]="!counts[bubble.class]"
+    [class.left-end]="bubble.isLeftEnd"
+    [class.right-end]="bubble.isRightEnd"
+    >
+    {{ counts[bubble.class] }}
+  </span>
+</span>
+
+<ng-template #empty>
+  <span class="badge"></span>
+</ng-template>

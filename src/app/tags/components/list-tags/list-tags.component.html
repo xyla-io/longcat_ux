@@ -1,0 +1,85 @@
+<nb-layout class="main-layout">
+  <nb-layout-column>
+    <div class="wrapper">
+      <div class="ui secondary pointing menu">
+        <a class="item active"><i class="ui tags icon"></i> Auto-Tagging Naming Conventions</a>
+        <div *ngIf="loadingMessage !== LoadingMessages.None" class="loading-new-entities">
+          <div class="ui active inline mini loader"></div>
+          {{ loadingMessage }}
+        </div>
+      </div>
+      <ag-grid-angular
+        style="position: absolute; top: 20px; bottom: 0; left: 0; right: 0; margin-top: 40px; margin-bottom: 0"
+        class="ag-theme-balham grid"
+        [columnDefs]="columnDefs"
+        [gridOptions]="gridOptions"
+        (gridReady)="onGridReady($event)"
+        [sideBar]="gridSideBar"
+        [rowData]="rowData"
+        >
+      </ag-grid-angular>
+    </div>
+  </nb-layout-column>
+  <nb-sidebar
+    class="sidebar-editor"
+    [right]="true"
+    [state]="sidebarContentType === SidebarContentType.Hidden ? 'collapsed' : 'expanded'"
+    >
+    <app-sidebar-content
+      [updateConfirmation$]="sidebarUpdateConfirmation$"
+      (templateUpdate)="onTemplateUpdate($event)"
+      >
+    </app-sidebar-content>
+  </nb-sidebar>
+</nb-layout>
+
+<ngx-smart-modal #createParserModal [identifier]="'createParserModal'" class="fullwindow" (onAnyCloseEvent)="createParserChannel = undefined" [escapable]="!creatingParser" [dismissable]="!creatingParser" [closable]="!creatingParser">
+  <ng-container *ngIf="parsers; else loading">
+    <app-create-parser *ngIf="createParserChannel; else emptyModal"
+      [channel]="createParserChannel"
+      [existingParsers]="parsers"
+      (continue)="onContinueCreatingParser($event)"
+      >
+    </app-create-parser>
+    <ng-template #emptyModal><div [style.height]="'270px'"></div></ng-template>
+  </ng-container>
+  <ng-template #loading><div [nbSpinner]="true" [style.width]="'100%'" [style.height]="'200px'"></div></ng-template>
+</ngx-smart-modal>
+
+<ngx-smart-modal #confirmDeleteModal identifier="confirmDeleteModal" class="fullwindow">
+  <div class="confirmation-modal" *ngIf="confirmDeleteModal.getData() as data">
+    <div *ngIf="!data.saving; else savingTemplate">
+      <h1>Delete Naming Convention</h1>
+      <div class="modal-info">
+        <app-heading-channel
+          *ngIf="data.channel"
+          [channel]="data.channel"
+        ></app-heading-channel>
+        <app-badge-parser-key
+          *ngIf="data.parserKey"
+          [parserKey]="data.parserKey"
+          [showInfoIcon]="false"
+        ></app-badge-parser-key>
+      </div>
+
+      <p>This can't be undone</p>
+      <div class="buttons">
+        <button class="ui button"
+          (click)="confirmDeleteModal.close()"
+          >
+          Keep Naming Convention
+        </button>
+        <button class="ui danger button"
+          (click)="confirmDeleteModal.setData({confirm: true}, true)"
+          >
+          Delete Naming Convention
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-template #savingTemplate>
+    <div class="modal-saving-container" [nbSpinner]="true">
+      Deleting Naming Convention
+    </div>
+  </ng-template>
+</ngx-smart-modal>

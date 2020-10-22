@@ -1,0 +1,6 @@
+<div *ngIf="errors.length > 0" class="error-messages">
+  <div *ngFor="let error of errors">{{ error }}</div>
+</div>
+<div *ngIf="results.length > 0" class="result-messages">
+  <div *ngFor="let result of results">{{ result }}</div>
+</div>

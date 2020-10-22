@@ -1,0 +1,77 @@
+@import 'style-guide';
+
+$container-WIDTH: 242px;
+$container-HEIGHT: 126px;
+$container-BACKGROUND: white;
+$big-number-FONT-SIZE: 36px;
+$big-number-FONT-FAMILY: 'ProximaNova';
+$label-FONT-FAMILY: 'ProximaNova';
+$label-FONT-SIZE: 12px;
+$label-COLOR: #444;
+
+nb-card {
+  // let the parent component dictate the margin
+  margin-bottom: 0;
+}
+
+.container {
+  text-align: center;
+  background: $container-BACKGROUND;
+  width: $container-WIDTH;
+  height: $container-HEIGHT;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+ 
+}
+
+.error {
+  nb-icon {
+    font-size: 2rem !important;
+  }
+  .big-number {
+    margin-top: 20px !important;
+  }
+}
+
+.big-number {
+  font-size: $big-number-FONT-SIZE;
+  font-family: 'ProximaNova';
+  margin-top: calc((#{$container-HEIGHT} / 2) - (#{$big-number-FONT-SIZE}));
+}
+
+.label {
+  color: $label-COLOR;
+  text-transform: uppercase;
+  font-family: 'ProximaNova';
+  margin-top: $label-FONT-SIZE;
+  font-size: $label-FONT-SIZE;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.container--large {
+  $container-WIDTH: 270px;
+  $container-HEIGHT: 160px;
+  $container-BACKGROUND-FALLBACK: $color-info-500;
+  $container-BACKGROUND: $gradient-purple-to-red;
+  $big-number-COLOR: white;
+  $label-COLOR: #CFD1D6;
+  $label-FONT-SIZE: 15px;
+
+  background: $container-BACKGROUND-FALLBACK;
+  background: $container-BACKGROUND;
+  width: $container-WIDTH;
+  height: $container-HEIGHT;
+
+  .big-number {
+    color: $big-number-COLOR;
+    margin-top: calc((#{$container-HEIGHT} / 2) - (#{$big-number-FONT-SIZE}));
+  }
+
+  .label {
+    color: $label-COLOR;
+    font-size: $label-FONT-SIZE;
+    font-weight: 500;
+  }
+}
+

@@ -1,0 +1,12 @@
+<div *ngIf="data" class="wrapper">
+  <div class="entity-info">
+    <span class="entity-name" [class.no-name]="!data.name">{{ data.name }}</span>
+    <span class="entity-id">{{ data.id }}</span>
+  </div>
+  <div class="tag-entries" *ngIf="data.tags">
+    <div *ngFor="let tag of data.tags | keyvalue" class="tag-entry">
+      <span class="tag-key">{{ tag.key }}</span>
+      <span class="tag-value">{{ tag.value }}</span>
+    </div>
+  </div>
+</div>

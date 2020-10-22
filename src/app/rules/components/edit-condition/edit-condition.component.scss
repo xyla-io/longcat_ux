@@ -1,0 +1,25 @@
+@import 'style-guide';
+
+select {
+  &.condition-operator {
+    &:hover {
+      background: white;
+    }
+    width: 22px;
+    padding-right: 0;
+  }
+}
+
+.readonly-condition-operator {
+  margin-right: 8px;
+}
+
+.circular-button {
+  opacity: 0.2;
+  &.delete {
+    opacity: 0.1;
+  }
+  &.glowing {
+    opacity: 0.8;
+  }
+}

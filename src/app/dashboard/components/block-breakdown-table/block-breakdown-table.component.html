@@ -1,0 +1,28 @@
+<ng-container *ngIf="!error; else errorTemplate">
+  <div class="block">
+
+    <app-block-breakdown-table-heading
+      [template]="template"
+      [masterTemplate]="master"
+      [menu]="menuHelper"
+      (daterangeChange)="onDaterangeChange($event)"
+      >
+    </app-block-breakdown-table-heading>
+
+    <app-block-breakdown-table-body
+      [viewModel]="viewModel"
+      [template]="template"
+      [dataRefreshing]="dataRefreshing"
+      >
+    </app-block-breakdown-table-body>
+    
+  </div>
+</ng-container>
+<ng-template #errorTemplate>
+  <div class="loading-container error">
+    <nb-icon icon="alert-circle-outline"></nb-icon>
+    <br>
+    <br>
+    {{ error }}
+  </div>
+</ng-template>

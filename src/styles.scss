@@ -1,0 +1,154 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'styles/style-guide';
+
+/* Global imports */
+@import 'styles/fonts/proxima-nova.scss';
+@import 'themes';
+// nebular framework component styles
+@import '~@nebular/theme/styles/globals';
+// ag-grid styles
+@import 'ag-grid';
+// ngx-smart-modal styles
+@import "~ngx-smart-modal/ngx-smart-modal";
+@import 'styles/ngx-smart-modal-customizations.scss';
+// xyla global styles
+@import 'styles/forms.css';
+@import 'styles/menus.css';
+
+// install the nebular framework styles
+@include nb-install() {
+  @include nb-theme-global();
+};
+
+:root {
+    --xylablue: #17a9d4; 
+    --xylagreen: #8ec200;
+    --xylaprimary: #ff0033;
+    --xylaprimary90: rgba(255, 0, 51, 0.9);
+    --xylaprimary80: rgba(255, 0, 51, 0.8);
+    --xylaprimary70: rgba(255, 0, 51, 0.7);
+    --xylaprimary60: rgba(255, 0, 51, 0.6);
+    --xylaprimary50: rgba(255, 0, 51, 0.5);
+    --xylaprimaryhover: #F35451;
+    --bglight: #f8f9fa;
+    --xylamediumgrey: #cccccc; 
+    --xyladarkgrey: #5c6268; 
+    --xylasuccess: var(--xylagreen);
+    --xylafaintgrey: rgba(0, 0, 0, 0.05);
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  font-size: 14px;
+}
+
+input::placeholder {
+  color: $color-gray-200;
+  font-weight: 400;
+}
+
+app-tagging img.creative-thumbnail {
+  height: 64px;
+}
+
+app-tagging .tag-filter-button {
+  border-color: var(--xylaprimary);
+  background-color: var(--xylaprimary);
+}
+
+.fade-in {
+  animation: fade-in 0.5s;
+}
+
+@keyframes fade-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+a, .nb-theme-default a {
+  color: var(--xylaprimary);
+}
+
+a:hover, .nb-theme-default a:hover {
+  color: var(--xylaprimaryhover);
+  text-decoration: underline;
+}
+
+.nb-theme-default li a:hover {
+  color: var(--xylaprimaryhover);
+  text-decoration: none;
+}
+
+.dropdown-menu a {
+  color: #000;
+}
+
+.dropdown-menu a:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+/* reset container class styles */
+.container {
+  margin: 0;
+  padding: 0;
+}
+
+.ui.secondary.pointing.menu .active.item {
+  border-color: var(--xylaprimary) !important;
+}
+
+.ui.multiple.dropdown>.label {
+  box-shadow: none;
+}
+
+.ui.tabular.menu {
+  background-color: $main-background-color;
+  border-bottom: 1px solid white;
+  margin-bottom: 0;
+}
+
+nb-sidebar,
+nb-sidebar > div.main-container {
+  transition: width 0.4s;
+}
+
+// Mobile hamburger menu in navbar
+@media (max-width: 992px) {
+  .navbar-collapse {
+    position: absolute;
+    background: white;
+    box-shadow: $shadow-subtle;
+    border-radius: 4px;
+  }
+}
+
+$scrollbar-color: $color-gray-500;
+
+body {
+  * {
+    ::-webkit-scrollbar {
+      width: 3px;
+      height: 1px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.5);
+      border-radius: 3px;
+    }
+
+    * {
+      scrollbar-color: $scrollbar-color transparent;
+      scrollbar-width: thin;
+      scroll-padding: 4px;
+    }
+  }
+}

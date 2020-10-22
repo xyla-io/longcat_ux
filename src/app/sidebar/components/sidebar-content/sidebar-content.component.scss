@@ -1,0 +1,128 @@
+@import 'style-guide';
+
+$heading-HEIGHT: 140px;
+$submit-button-MARGIN-TOP: 20px;
+
+.advance {
+  float: right;
+
+  .advance__button {
+
+    margin-right: 1.25rem;
+    margin-top: $submit-button-MARGIN-TOP;
+    color: $color-info-500;
+
+    &[disabled] {
+      nb-icon {
+        color: $color-button-muted;
+      }
+    }
+
+    nb-icon {
+      color: $color-info-500;
+      height: 18px;
+      width: 18px;
+    }
+  }
+}
+
+.save {
+  .save__button {
+    display: block;
+    margin: 0 auto;
+    margin-top: $submit-button-MARGIN-TOP;
+    background: $gradient-red-to-purple;
+    padding: 1px;
+    color: black;
+    .save__button-inner {
+      background: white;
+      padding: 12px 30px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+    &:not([disabled]) {
+      .save__button-inner:hover {
+        background: #f9f9f9;
+      }
+    }
+  }
+}
+
+.error-popover {
+  background: $color-primary-400;
+  padding: 6px;
+  margin: 1px;
+  color: white;
+  border-radius: 4px;
+}
+
+.close-button {
+  position: absolute;
+  top: 14px;
+  right: 10px;
+
+  button {
+    padding: 6px !important;
+  }
+
+  nb-icon {
+    font-size: 3rem;
+    color: white;
+  }
+}
+
+.heading {
+  color: white;
+  background: $color-info-500;
+  height: $heading-HEIGHT;
+  padding: 2rem;
+
+  .heading__title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  .heading__subtitle {
+    font-size: 1.25rem;
+  }
+
+  .heading__steps {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  .heading__step {
+    cursor: pointer;
+    color: $color-info-300;
+
+    nb-icon {
+      height: 12px;
+      position: relative;
+      top: 3px;
+    }
+  }
+
+  .heading__active-step {
+    color: white;
+    font-weight: bold;
+  }
+
+  .heading__step-separator {
+    color: $color-info-300;
+    margin-left: 8px;
+    margin-right: 8px;
+    height: 18px;
+    top: 0px;
+  }
+
+  .heading__spacer {
+    height: 12px;
+  }
+}
+
+.body {
+  padding: 2rem;
+  overflow-y: auto;
+  height: calc(90% - calc(#{$heading-HEIGHT} * 2));
+  box-shadow: 0 -8px 4px -7px rgba(0,0,0,.05) inset;
+}

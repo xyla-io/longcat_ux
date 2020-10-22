@@ -1,0 +1,9 @@
+.report {
+  height: 100%;
+  padding-left: 64px;
+}
+
+.report iframe {
+  height: 100%;
+  width: 100%;
+}

@@ -1,0 +1,20 @@
+<ng-container *ngIf="notifications && !allZeros; else noActivity">
+  <div class="title">{{trailingActivityDays}} day activity</div>
+  <span
+    class="badge"
+    >
+    <span
+      *ngFor="let bubble of bubbles; index as i"
+      [class]="bubble.class"
+      [class.none]="!counts[bubble.class]"
+      [class.left-end]="bubble.isLeftEnd"
+      [class.right-end]="bubble.isRightEnd"
+      >
+      {{ makeLabel(bubble) }}
+    </span>
+  </span>
+</ng-container>
+
+<ng-template #noActivity>
+  <div class="title">No {{trailingActivityDays}} day activity</div>
+</ng-template>

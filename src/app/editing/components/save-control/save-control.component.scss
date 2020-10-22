@@ -1,0 +1,43 @@
+@import 'style-guide';
+
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .left-group {
+    display: flex;
+    align-items: center;
+    width: 85%;
+  }
+
+  button {
+    margin-left: 16px;
+    &.danger {
+      border: none;
+      background-color: transparent;
+      color: red;
+      font-weight: 600;
+      &:hover {
+        background: red;
+        color: white;
+      }
+    }
+    &.save, &.cancel {
+      padding: 8px 12px !important;
+    }
+    &.cancel {
+      color: $color-gray-600;
+    }
+  }
+
+  input {
+    font-size: 1.5rem;
+    flex-grow: 1;
+    &:hover:not(:focus) {
+      background-color: $color-gray-100;
+    }
+    &::placeholder {
+      color: darkslategray;
+    }
+  }
+}

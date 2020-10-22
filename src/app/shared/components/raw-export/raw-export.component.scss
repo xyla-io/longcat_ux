@@ -1,0 +1,74 @@
+@import 'buttons';
+@import 'menus';
+
+#fullwidth {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}
+
+#card {
+  margin-top: 14px;
+}
+
+#exportButton {
+  height: 28px;
+  width: 28px;
+  text-align: center;
+  padding-top: 6px;
+  padding-left: 5px;
+  margin-left: 10px;
+  background-color: var(--xylaprimary);
+  color: white;
+}
+
+#exportButton:hover {
+  background-color: var(--xylaprimary70);
+}
+
+.content-container {
+  margin: 14px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+#exportLabel {
+  font-size: 18px;
+  margin-right: 8px;
+  color: var(--xyladarkgrey);
+}
+
+button:disabled {
+  cursor: default;
+}
+
+i.icon.check {
+  padding-top: 1px;
+}
+
+.button.primary-action.action-button {
+  max-width: 100% !important;
+}
+
+#exportButton.backgroundSuccess {
+  background: var(--xylasuccess);
+  border-color: var(--xylasuccess);
+}
+
+#downloadNameInput {
+  font-size: 12px;
+  width: auto;
+  height: 24px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#downloadNameExtension {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font-size: 12px;
+  height: 24px;
+  padding-top: 6px;
+  cursor: default;
+}

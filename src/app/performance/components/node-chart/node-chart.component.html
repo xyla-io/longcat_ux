@@ -1,0 +1,47 @@
+<div class="spacer" [style.width]="this.linerIndentation + 'px'"></div>
+<div class="liner" *ngIf="data && nodeTemplate; else loadingTemplate">
+  <div class="header">
+    <div class="info">
+      <div class="info emblem">
+        <i *ngIf="data.template" class="ui small violet wrench icon"></i>
+        <ng-container *ngIf="nodeTemplate.structure.metrics as kpis">
+          <div *ngIf="!nodeTemplate.structure.groups[0]">Total&nbsp;</div>
+          <div *ngIf="kpis.length; else noKPIs">
+            Daily {{kpis | displayNames:MetricOps.kpiOptions:{default: 'Totals', makeDisplayName: MetricOps.makeDisplayName } }}
+          </div>
+        </ng-container>
+        <div class="grouping" *ngIf="data.treeSettings.childGroups[0]">&nbsp;by {{ [nodeTemplate.structure.groups[0]] | displayNames:{}:{ makeDisplayName: CategoryOps.makeDisplayName } }}</div>
+        <ng-template #noKPIs><span class="info-label">No metrics selected</span></ng-template>
+      </div>
+      <div class="info" *ngIf="data.treeSettings.parentGroups[0]">
+        <div class="parent-info" *ngFor="let parent of data.treeSettings.parentGroups">
+          <span class="parent-category">
+            {{ CategoryOps.makeDisplayName(parent) }}
+          </span>
+          <span class="parent-value">
+            {{ [data.columns[parent]] | displayNames:[ChannelOps.channelOptions, PlatformOps.platformOptions] }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="info" [class.highlight]="data.template">
+      <button *ngIf="data.template" class="secondary" (click)="onClickResetLocalSettings($event)">Reset</button>
+      <app-performance-node-settings
+        [showLabels]="false"
+        [kpiOptions]="kpiOptions"
+        [kpiModel]="Options.booleanModel(nodeTemplate.structure.metrics)"
+        [daterange]="nodeTemplate.structure.daterange"
+        (kpiChange)="onKPIChange($event)"
+        (daterangeChange)="onDaterangeChange($event)"
+        >
+      </app-performance-node-settings>
+    </div>
+  </div>
+  <div #graph class="graph"></div>
+</div>
+
+<ng-template #loadingTemplate>
+  <!-- <div class="loading" *ngIf="!data && !nodeTemplate">
+    <app-loader size="30"></app-loader>
+  </div> -->
+</ng-template>

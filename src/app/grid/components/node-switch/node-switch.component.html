@@ -1,0 +1,33 @@
+<div class="node"
+  [ngClass]="{
+    'zero': node.level === 0,
+    'one': node.level === 1,
+    'two': node.level === 2,
+    'three': node.level === 3,
+    'four': node.level === 4,
+    'five': node.level === 5,
+    'leaf': nodeField === 'leaf'
+  }"
+  >
+
+  <ng-template #leafContainer></ng-template>
+
+  <ng-container *ngIf="nodeField !== 'leaf'">
+    <div class="group-node"
+      (click)="onClick($event)"
+      [class.expand-disabled]="onlyChildIsOwnPlaceholder"
+      >
+      <i [class.open]="node.expanded"   class="ui grey caret right icon"></i>
+      <ng-container [ngSwitch]="nodeField">
+        <app-node-channel   *ngSwitchCase="'channel'" [channel]="nodeValue" [node]="node" [gridEvents$]="gridEvents$" [bubbles]="bubbles" [context]="context" [showAddNode]="groupNodesContext(nodeField).showAddNode" (addNode)="onAddNode($event, nodeField)"></app-node-channel>
+        <app-node-account   *ngSwitchCase="'account'" [channel]="channel" [accountPath]="nodeValue" [node]="node" [gridEvents$]="gridEvents$" [bubbles]="bubbles" [context]="context" [showAddNode]="groupNodesContext(nodeField).showAddNode" (addNode)="onAddNode($event, nodeField)"></app-node-account>
+        <app-node-campaign  *ngSwitchCase="'campaignID'" [channel]="channel" [campaignID]="nodeValue" [node]="node" [gridEvents$]="gridEvents$" [bubbles]="bubbles" [context]="context" [showAddNode]="groupNodesContext(nodeField).showAddNode" (addNode)="onAddNode($event, nodeField)"></app-node-campaign>
+        <app-node-adgroup   *ngSwitchCase="'adgroupID'" [channel]="channel" [adgroupID]="nodeValue" [node]="node" [gridEvents$]="gridEvents$" [bubbles]="bubbles" [context]="context" [showAddNode]="groupNodesContext(nodeField).showAddNode" (addNode)="onAddNode($event, nodeField)"></app-node-adgroup>
+        <app-node-tag-group *ngSwitchCase="'parserName'" [channel]="channel" [parserName]="nodeValue" [node]="node" [gridEvents$]="gridEvents$" [bubbles]="bubbles" [context]="context" [showAddNode]="groupNodesContext(nodeField).showAddNode" (addNode)="onAddNode($event, nodeField)"></app-node-tag-group>
+        <app-node-entity-level *ngSwitchCase="'entityLevel'" [channel]="channel" [entityLevel]="nodeValue" [node]="node" [gridEvents$]="gridEvents$" [bubbles]="bubbles" [context]="context" [showAddNode]="groupNodesContext(nodeField).showAddNode" (addNode)="onAddNode($event, nodeField)"></app-node-entity-level>
+        <app-node-performance-group *ngSwitchCase="'performanceGroup'" [node]="node" [gridEvents$]="gridEvents$" [bubbles]="bubbles" [context]="context" [showAddNode]="groupNodesContext(nodeField).showAddNode" (addNode)="onAddNode($event, nodeField)"></app-node-performance-group>
+      </ng-container>
+    </div>
+  </ng-container>
+
+</div>

@@ -1,0 +1,33 @@
+<label class="line-start">then</label>
+<select [value]="action.action"
+  (change)="onSelectActionChange($event)"
+  >
+  <option
+    *ngFor="let value of Options.keys(TaskOps.actionOptions, { channel: channel })"
+    [value]="value"
+    >
+    {{ TaskOps.actionOptions[value].displayName }}
+  </option>
+</select>
+
+<ng-container *ngIf="TaskOps.actionOptions[action.action].params as params">
+  <ng-container *ngIf="params.adjustmentValue">
+    <label>by</label>
+    <input class="metric right"
+      [value]="action.adjustmentValue"
+      type="number"
+      step="0.5"
+      (change)="onAdjustmentValueChange($event)"
+      />
+    <label>%</label>
+    <ng-container *ngIf="params.adjustmentLimit">
+      <label class="adjustment-limit">stop at $</label>
+      <input class="metric"
+        [value]="action.adjustmentLimit"
+        type="number"
+        step="0.01"
+        (change)="onAdjustmentLimitChange($event)"
+        />
+    </ng-container>
+  </ng-container>
+</ng-container>

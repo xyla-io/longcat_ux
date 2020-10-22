@@ -1,0 +1,193 @@
+
+$header-height: 68px;
+$footer-height: 48px;
+
+$screen-margin-left: 20px;
+
+$main-background-color: #F9FAFC;
+
+$color-primary-100: #FFD5CC;
+$color-primary-200: #FFA199;
+$color-primary-300: #FF6667;
+$color-primary-400: #FF3F53;
+$color-primary-500: #FF0033;
+$color-primary-600: #DB0040;
+$color-primary-700: #B70047;
+$color-primary-800: #930047;
+$color-primary-900: #7A0047;
+
+$color-warning-100: #FEF7CE;
+$color-warning-200: #FEED9E;
+$color-warning-300: #FCDF6E;
+$color-warning-400: #FAD14A;
+$color-warning-500: #f8bb0f;
+$color-warning-600: #D59A0A;
+$color-warning-700: #B27C07;
+$color-warning-800: #8F6004;
+$color-warning-900: #774C02;
+
+$color-info-100: #EBC9FA;
+$color-info-200: #D395F6;
+$color-info-300: #AE5EE6;
+$color-info-400: #8736CD;
+$color-info-500: #5603AD;
+$color-info-600: #420294;
+$color-info-700: #31017C;
+$color-info-800: #220064;
+$color-info-900: #180053;
+
+$color-success-100: #F1FAC9;
+$color-success-200: #E1F595;
+$color-success-300: #C3E35D;
+$color-success-400: #A0C734;
+$color-success-500: #73A303;
+$color-success-600: #5E8C02;
+$color-success-700: #4B7501;
+$color-success-800: #395E00;
+$color-success-900: #2D4E00;
+
+$color-construction-500: #F77C04;
+
+$color-gray-50: rgba(0,0,0,0.025);
+$color-gray-100: rgba(0,0,0,0.05);
+$color-gray-200: rgba(0,0,0,0.15);
+$color-gray-300: rgba(0,0,0,0.25);
+$color-gray-400: rgba(0,0,0,0.35);
+$color-gray-500: rgba(0,0,0,0.45);
+$color-gray-600: rgba(0,0,0,0.55);
+$color-gray-700: rgba(0,0,0,0.65);
+$color-gray-800: rgba(0,0,0,0.75);
+$color-gray-900: rgba(0,0,0,0.85);
+
+$gradient-purple-to-red: linear-gradient(73deg, rgba(86,6,173,1) 10%, rgba(184,29,170,1) 59%, rgba(252,39,30,1) 94%);
+$gradient-red-to-purple: linear-gradient(73deg,rgba(252,39,30,1) 6%, rgba(184,29,170,1) 59%,  rgba(86,6,173,1) 90%);
+
+$color-title-primary: #4A4A4A;
+$color-button-muted: #cacaca;
+$color-button-bright: #edf1f7;
+$color-button-bright-hover: #d6dce4;
+$hover-white-element: rgba(0, 0, 0, 0.02);
+
+$color-info-muted: #AD91D6;
+$shadow-subtle: 0 2px 10px #cccccc66;
+$shadow-dropdown: 0 3px 8px 0 rgba(0,0,0,0.11);
+$border-radius-wrapper-default: 8px;
+
+/********/
+/* grid */
+/********/
+$color-grid-header-background: white;
+
+/****************/
+/* default font */
+/****************/
+$primary-font-family: 'ProximaNova';
+
+* {
+  font-family: $primary-font-family;
+}
+
+/*********/
+/* radio */
+/*********/
+/* The container */
+.radio {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radio input {
+  position: absolute;
+  opacity: 0;
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  top: -5px;
+  left: -10px;
+  z-index: 4;
+}
+
+/* Create a custom radio button */
+.radio__checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: $color-button-bright;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.4);
+}
+
+/* On mouse-over, add a grey background color */
+.radio:hover input ~ .radio__checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.radio input:checked ~ .radio__checkmark {
+  background-color: #ff0000;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radio__checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio input:checked ~ .radio__checkmark:after {
+  display: block;
+}
+
+
+/**********/
+/* select */
+/**********/
+select {
+  cursor: pointer;
+  z-index: 5;
+  padding: 4px 25px 4px 8px;
+  margin-right: 3px;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 2px;
+  background: url(/assets/radio-arrow.png) 96% / 18px no-repeat;
+}
+
+/***********/
+/* tooltip */
+/***********/
+.ui.popup {
+  padding: 4px 8px;
+  font-size: 0.9rem;
+}
+
+/**********/
+/* emblem */
+/**********/
+$emblem-color-basic: $color-button-bright;
+$emblem-padding-normal: 2px 5px;
+$emblem-border-radius-normal: 4px;
+$emblem-font-weight-normal: 400;
+$emblem-font-size-normal: 1.1rem;
+
+.emblem {
+  background: $emblem-color-basic;
+  width: fit-content;
+  padding: $emblem-padding-normal;
+  border-radius: $emblem-border-radius-normal;
+  font-weight: $emblem-font-weight-normal;
+  font-size: $emblem-font-size-normal;
+}
+
+@import 'iomap.style-guide';

@@ -1,0 +1,26 @@
+<div id="container">
+  <div class="ui secondary pointing menu">
+    <a
+      *ngFor="let tab of dataFeedTabs"
+      class="item"
+      [class.active]="selectedTab.identifier === tab.identifier"
+      (click)="clickDataFeedTab(tab)"
+      >
+      {{tab.displayName}}
+      <ng-container *ngIf="tab.iconTag">
+        &nbsp;&nbsp;&nbsp;
+        <i [class]="['ui', 'fitted', tab.iconTag, 'icon'].join(' ')"
+          [ngClass]="selectedTab.identifier === tab.identifier ? 'black' : 'grey'"
+        ></i>
+      </ng-container>
+    </a>
+  </div>
+  <app-data-feeds-inbound
+    *ngIf="selectedTab.identifier === 'inbound'"
+    [companyIdentifier]="companyIdentifier"
+    ></app-data-feeds-inbound>
+  <app-data-feeds-outbound
+    *ngIf="selectedTab.identifier === 'outbound'"
+    [companyIdentifier]="companyIdentifier"
+    ></app-data-feeds-outbound>
+</div>

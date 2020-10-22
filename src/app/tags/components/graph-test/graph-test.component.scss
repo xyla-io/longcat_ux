@@ -1,0 +1,13 @@
+@import 'style-guide';
+:host {
+  display: flex;
+  padding: 40px ;
+  height: 700px;
+  .graph {
+    // flex-grow: 1;
+    width: 50%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: $shadow-subtle;
+  }
+}

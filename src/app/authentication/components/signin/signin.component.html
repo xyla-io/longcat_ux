@@ -1,0 +1,53 @@
+<div class="form-default" id="signinForm">
+  <img class="form-brand-logo" src="assets/xyla_full_logo.png" />
+  <form>
+    <h1 class="form-title">Sign into your account</h1>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input
+      [(ngModel)]="email"
+      type="email"
+      name="email"
+      autocomplete="email"
+      id="inputEmail"
+      class="form-control form-control-top"
+      placeholder="Email address"
+      autofocus
+      (keypress)="inputEmailKeyPress($event)"
+      (keydown)="inputEmailKeyPress($event)"
+      (keyup)="inputEmailKeyPress($event)"
+      >
+    <i
+      *ngIf="emailLocked"
+      id="emailInvitationLabel"
+      class="circular small grey info icon"
+      suiPopup
+      popupText="To change your invitation email address, please contact your site administrator"
+      popupPlacement="right"
+      popupInverted
+      ></i>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input
+      [(ngModel)]="password"
+      name="password"
+      type="password"
+      autocomplete="current-password"
+      id="inputPassword"
+      class="form-control form-control-bottom"
+      placeholder="Password"
+      >
+    <app-message-presenter [errors]="submissionErrors"></app-message-presenter>
+    <app-submit-button
+      (onClick)="onSignInClicked()"
+      [label]="'Sign in'"
+      [isEnabled]="signInIsEnabled"
+      [isWaiting]="waitingForResponse">
+    </app-submit-button>
+  </form>
+  <br>
+  <div class="form-info">
+    Don't have an account?&nbsp;&nbsp;<a routerLink="/signup" [queryParams]="{email: email, invitation: invitationToken}">Sign up</a>
+  </div>
+  <div class="form-info">
+    <a routerLink="/forgot-password" [queryParams]="{email: email}">Forgot password?</a>
+  </div>
+</div>

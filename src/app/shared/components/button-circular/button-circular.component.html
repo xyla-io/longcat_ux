@@ -1,0 +1,17 @@
+<ng-container *ngIf="tooltip; else button">
+  <span
+    suiPopup
+    [popupText]="tooltip"
+    popupPlacement="right"
+    popupBasic
+    popupInverted
+    popupTransition="fade"
+    >
+    <ng-container [ngTemplateOutlet]="button"></ng-container>
+  </span>
+</ng-container>
+<ng-template #button>
+  <button>
+    <i [class]="[color, icon, 'circle icon'].join(' ')"></i>
+  </button>
+</ng-template>

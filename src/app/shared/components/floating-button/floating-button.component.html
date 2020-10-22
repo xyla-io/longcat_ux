@@ -1,0 +1,25 @@
+<div *ngIf="collapsed; else floatingButton"
+  [nbTooltip]="collapsedLabel || label"
+  nbTooltipPlacement="right"
+  >
+  <ng-container *ngTemplateOutlet="floatingButton"></ng-container>
+</div>
+<ng-template #floatingButton>
+  <div class="floating-button"
+    (click)="onClick($event)"
+    >
+    <div class="floating-button__button">
+      <nb-icon *ngIf="collapsed && collapsedIcon; else normalIcon"
+        [icon]="collapsedIcon">
+      </nb-icon>
+      <ng-template #normalIcon>
+        <nb-icon [icon]="icon"></nb-icon>
+      </ng-template>
+    </div>
+    <span *ngIf="!collapsed"
+      class="floating-button__label"
+      >
+      {{ label }}
+    </span>
+  </div>
+</ng-template>

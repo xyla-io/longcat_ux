@@ -1,0 +1,10 @@
+@import 'style-guide';
+@import 'grid-settings';
+
+app-daterange-selector {
+  background: white;
+  padding: 5.5px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 160px;
+}

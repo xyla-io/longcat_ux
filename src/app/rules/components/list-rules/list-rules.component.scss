@@ -1,0 +1,21 @@
+.wrapper {
+  margin: 10px 40px;
+
+  .ui.menu {
+    position: relative;
+    .loading-new-entities {
+      position: absolute;
+      right: 0;
+      font-size: 0.9rem;
+      bottom: 6px;
+      font-style: italic;
+      .loader {
+        z-index: 0;
+        position: relative;
+        top: -1px;
+        margin-right: 6px;
+      }
+    }
+  }
+
+}

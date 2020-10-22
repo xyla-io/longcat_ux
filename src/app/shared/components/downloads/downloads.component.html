@@ -1,0 +1,63 @@
+<div
+  [suiTransition]="maximizeTransition"
+  id="container"
+  *ngIf="!minimized && downloads.length">
+  <div
+    class="ui raised segments"
+    >
+
+    <div class="ui top attached inverted header">
+      <i class="large angle down icon"
+        id="minimizeIcon"
+        (click)="clickToggleMinimize($event)"
+        suiPopup
+        popupText="Minimize"
+        popupPlacement="top"
+        popupInverted
+        ></i>
+        Downloads
+        <div class="ui horizontal blue label">
+          <i class="download icon"></i>
+          {{ downloads.length }}
+        </div>
+    </div>
+
+    <ng-container *ngFor="let download of downloads; index as i">
+      <div
+        class="ui segment download-segment"
+        >
+        <p>{{ download.displayName }}</p>
+        <p>{{ download.fileName }}</p>
+        <sui-progress
+          class="bottom attached blue active"
+          [value]="download.progress"
+          >
+        </sui-progress>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div
+   *ngIf="minimized && downloads.length"
+   [suiTransition]="minimizeTransition"
+  >
+  <div
+    id="minimizedSegment" class="ui segment"
+    suiPopup
+    popupText="Show Downloads ({{downloads.length}} in progress)"
+    popupPlacement="top right"
+    popupInverted
+    (click)="clickToggleMinimize($event)"
+    >
+    <i 
+      id="maximizeIcon"
+      class="fitted large angle left icon"
+      ></i>
+    <div class="download-info">
+      <div class="ui blue label">
+        {{ downloads.length }}
+      </div>
+    </div>
+  </div>
+</div>

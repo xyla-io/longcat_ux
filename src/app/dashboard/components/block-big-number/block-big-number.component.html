@@ -1,0 +1,41 @@
+<ng-container *ngIf="!error; else errorTemplate">
+  <nb-card class="container"
+    *ngIf="template"
+    [class.container--normal]="template.structure.size==='normal'"
+    [class.container--large]="template.structure.size==='large'"
+    >
+    <nb-card-body class="body"
+      [nbSpinner]="!viewModel || dataRefreshing"
+      >
+      <ng-container *ngIf="viewModel">
+        <div class="big-number">
+          <app-display-format
+            [format]="viewModel.columnTemplate.options.format"
+            [value]="viewModel.value"
+            displayNullAs="∞"
+            >
+          </app-display-format>
+        </div>
+        <div class="label">{{ viewModel.label }}</div>
+        <br>
+      </ng-container>
+    </nb-card-body>
+  </nb-card>
+</ng-container>
+<ng-template #errorTemplate>
+  <nb-card class="container error"
+    *ngIf="template"
+    [class.container--normal]="template.structure.size==='normal'"
+    [class.container--large]="template.structure.size==='large'"
+    >
+    <nb-card-body class="body">
+      <ng-container>
+        <div class="big-number">
+          <nb-icon icon="alert-circle-outline"></nb-icon>
+        </div>
+        <div class="label">{{ error }}</div>
+        <br>
+      </ng-container>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

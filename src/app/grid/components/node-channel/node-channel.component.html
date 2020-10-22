@@ -1,0 +1,21 @@
+<div class="wrapper">
+  <img class="logo"
+    [src]="ChannelIconService.iconForChannel(channel)"
+    [ngStyle]="{
+      'background': ChannelOps.channelOptions[channel].color
+    }"
+    />
+  <span class="name">{{ ChannelOps.channelOptions[channel].displayName }}</span>
+  <div
+    nbTooltip="Create New Naming Convention"
+    nbTooltipPlacement="right"
+    >
+    <app-button-circular
+      *ngIf="showAddNode && isHovering"
+      icon="plus"
+      color="purple"
+      (click)="onClickAddNode($event)"
+      >
+    </app-button-circular>
+  </div>
+</div>

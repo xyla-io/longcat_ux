@@ -1,0 +1,40 @@
+@import 'style-guide';
+
+.wrapper {
+  position: relative;
+  height: 100%;
+
+  .ui.menu {
+    position: relative;
+    .loading-new-entities {
+      position: absolute;
+      right: 0;
+      font-size: 0.9rem;
+      bottom: 6px;
+      font-style: italic;
+      .loader {
+        z-index: 0;
+        position: relative;
+        top: -1px;
+        margin-right: 6px;
+      }
+    }
+  }
+
+}
+
+.modal-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;;
+  justify-content: center;
+  app-badge-parser-key {
+    margin-bottom: 30px;
+  }
+}
+
+
+nb-layout-column {
+  padding: 0 !important;
+  margin: 10px 40px 0 40px;
+}

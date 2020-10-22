@@ -1,0 +1,21 @@
+<app-performance-grid-settings
+  [columns]="columns"
+  [categories]="gridTemplate.structure.categories"
+  [metrics]="gridTemplate.structure.metrics"
+  [daterange]="gridTemplate.structure.daterange"
+  (categories)="onCategoryChange($event)"
+  (metrics)="onKPIChange($event)"
+  (daterange)="onDaterangeChange($event)"
+  >
+</app-performance-grid-settings>
+<app-io-grid
+  [sources]="sources"
+  [options]="gridOptions"
+  [groupByColumns]="gridTemplate.structure.categories"
+  [nodeTemplates]="gridTemplate.structure.nodes"
+  [gridState]="gridTemplate.structure.gridState"
+  (columnsChange)="onColumnsChange($event)"
+  (nodeTemplatesUpdate)="onNodeTemplatesUpdate($event)"
+  (gridStateUpdate)="onGridStateUpdate($event)"
+  >
+</app-io-grid>

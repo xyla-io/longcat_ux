@@ -1,0 +1,25 @@
+<div class="section">
+  <div class="section__heading">
+    Featured KPIs
+  </div>
+  <app-edit-columns
+    [selectedDisplayColumns]="selectedDisplayColumns"
+    [masterTemplate]="masterTemplate"
+    [maxSelectedDisplayColumns]="maxSelectedDisplayColumns"
+    firstColumnBadge="Featured"
+    (selectedDisplayColumnsChange)="onSelectedDisplayColumnsChange($event)"
+    (validationChange)="onEditColumnsValidationChange($event)"
+    >
+  </app-edit-columns>
+</div>
+<div class="section">
+  <div class="section__heading">
+    Timeline
+  </div>
+  <app-daterange-builder
+    [daterange]="interval"
+    (validationChange)="onEditDaterangeValidationChange($event)"
+    (daterangeChange)="onDaterangeChange($event)"
+    >
+  </app-daterange-builder>
+</div>

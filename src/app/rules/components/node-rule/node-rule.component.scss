@@ -1,0 +1,161 @@
+@import 'style-guide';
+@import 'animations';
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;;
+  &.adgroup {
+    .expand-collapse-wrapper {
+      i.expand-collapse {
+        padding-left: 30px;
+        width: 80px;
+      }
+    }
+  }
+  .expand-collapse-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;;
+    cursor: pointer;
+    i.expand-collapse {
+      color: $color-gray-300;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      width: 60px;
+      padding: 20px;
+      &:hover {
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: 1;
+        &.expand {
+          animation-name: pop;
+        }
+        &.compress {
+          animation-name: push;
+        }
+      }
+    }
+  }
+
+  .liner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    * {
+      color: #333;
+    }
+
+    .label {
+      color: $label-color;
+    }
+
+    .options-box {
+      cursor: default;
+      height: 100%;
+      padding-left: 10px;
+      display: flex;
+      align-items: center;
+      i {
+        pointer-events: none;
+        transition-property: left color;
+        transition-duration: 0.5s;
+        position: relative;
+        opacity: 0.6;
+        top: -1px;
+        &.isEnabled {
+          left: -34px;
+          color: white;
+          text-shadow: 0px 1px 0px #777;
+        }
+        &.isDisabled {
+          left: -20px;
+          color: #888;
+        }
+      }
+          
+    }
+
+    .left-group {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      .click-expand-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        width: 100%;
+        padding-right: 12px;
+        .left-group {
+          display: flex;
+          align-items: center;
+          height: 100%;
+        }
+        .time-settings {
+          background-color: rgba(0,0,0,0.035);
+          display: flex;
+          flex-direction: column;
+          border-radius: $border-radius-wrapper-default;
+          padding: 8px 12px;
+          min-width: 140px;
+          text-align: center;
+          margin-left: 12px;
+          margin-right: 12px;
+        }
+
+        .tasks {
+          display: flex;
+          flex-direction: column;
+          .task {
+            margin: 4px 0;
+            display: flex;
+            .conditions {
+              display: inline-block;
+              min-width: 80px;
+              .condition {
+                display: inline-block;
+                .group-operator {
+                  margin: 0 8px;
+                  color: $color-gray-400;
+                }
+                .operator {
+                  display: inline-block;
+                  margin: 0 4px;
+                }
+              }
+            }
+            .action {
+              .then-arrow {
+                display: inline-block;
+                margin: 0 8px;
+                color: $color-gray-200;
+              }
+              .action-name {
+                color: $input-color;
+                display: inline-block;
+                margin-left: 4px;
+                font-weight: 600;
+              }
+              .adjustmentValue {
+                display: inline-block;
+                min-width: 40px;
+                margin-left: 8px;
+              }
+              .adjustmentLimit {
+                display: inline-block;
+                margin-left: 8px;
+                color: $color-gray-400;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

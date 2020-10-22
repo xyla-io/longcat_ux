@@ -1,0 +1,22 @@
+<div class="section" [class.condensed]="!showLabels" *ngIf="ready">
+  <div *ngIf="showLabels" class="label">Metrics</div>
+  <app-option-multi-select
+    icon="chart line"
+    *ngIf="kpiOptions"
+    [model]="kpiModel"
+    [options]="kpiOptions"
+    [noShadow]="true"
+    placeholder="Select 1 or more metrics"
+    (selectionChange)="onSelectKPIChange($event)"
+    >
+  </app-option-multi-select>
+
+  <div class="spacer"></div>
+
+  <div *ngIf="showLabels" class="label">Timeline</div>
+  <app-daterange-selector
+    [daterange]="daterange"
+    (daterangeChange)="onDaterangeChange($event)"
+    >
+  </app-daterange-selector>
+</div>

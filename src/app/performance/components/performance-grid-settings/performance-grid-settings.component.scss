@@ -1,0 +1,10 @@
+@import 'style-guide';
+@import 'grid-settings';
+
+:host {
+  .liner {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: linear-gradient(white -132%, #5603AD 66%);
+  }
+}
